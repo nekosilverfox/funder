@@ -10,7 +10,7 @@ Logger.init_logger()  # 初始化 Logger
 import sys
 
 from PySide6.QtCore import QTimer
-from PySide6.QtWidgets import QApplication, QMainWindow, QTableView, QHeaderView
+from PySide6.QtWidgets import QApplication, QMainWindow, QTableView, QHeaderView, QProgressBar
 from ui_form import Ui_MainWindow
 
 from fund_getter_thread import FundGetterThread
@@ -25,6 +25,7 @@ class MainWindow(QMainWindow):
         super().__init__(parent)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        # self.ui.setTitle("公募基金筛选器")
 
         # 向状态栏添加控件
         self.statusBar().showMessage("窗体初始化成功")
@@ -46,50 +47,106 @@ class MainWindow(QMainWindow):
     def receive_fund_data(cls, data):
         """处理任务结果"""
         cls._fund = data
-        cls.statusBar().showMessage("成功获取基金数据")
+        cls.statusBar().showMessage(f"成功获取公募基金数据 共 {cls._fund.shape[0]} 条数据")
         cls._log.info(cls._fund)
         cls.ui.tbvFunds.setModel(DataFrameModel(cls._fund))  # 创建 DataFrameModel 并绑定到 QTableView
         cls.set_tb_header_style()  # 设置表样式
+        cls.statusBar().removeWidget(cls.loding_bar)  # 移除进度条
 
     def handle_error(cls, error_message):
         """处理错误"""
         cls.statusBar().showMessage(error_message)
+        cls.statusBar().removeWidget(cls.loding_bar)  # 移除进度条
 
     def reload_fund(cls):
         """启动子线程去获取基金数据"""
-        cls.statusBar().showMessage("开始获取基金数据基...")
+        # 添加无限循环的进度条到状态栏
+        cls.loding_bar = QProgressBar()
+        cls.loding_bar.setRange(0, 0)  # 无限循环模式
+        cls.loding_bar.setFixedWidth(200)  # 设置进度条宽度
+        cls.statusBar().addPermanentWidget(cls.loding_bar)
+
+        cls.statusBar().showMessage("开始获取基金数据...")
         cls._log.info("开始获取基金数据")
         cls.thread.start()  # 启动子线程
 
     def set_tb_header_style(cls):
         """设置表头样式，必须在数据添加之后调用，否则会因为越界导致崩溃"""
         cls._log.info("设置表样式")
+        cls.ui.tbvFunds.setStyleSheet("""
+                    /* 表格整体背景颜色 */
+                    QTableView {
+                        background-color: #181D1F;
+                        gridline-color: #242830;
+                        alternate-background-color: #182D0F;
+                        selection-background-color: #273B5A;
+                    }
+
+                    /* 单元格字体样式 */
+                    QTableView::item {
+                        font-size: 10px;
+                    }
+                """)
+
+        cls.ui.tbvFunds.verticalHeader().setVisible(False)  # 取消显示水平表头
+
         tb_header = cls.ui.tbvFunds.horizontalHeader()
         tb_header.setSectionResizeMode(QHeaderView.Stretch)  # 自动拉伸
 
         tb_header.setSectionResizeMode(0, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(0, 70)  # 固定宽度
+        cls.ui.tbvFunds.setColumnWidth(0, 65)  # 固定宽度
+
+        tb_header.setSectionResizeMode(2, QHeaderView.Fixed)
+        cls.ui.tbvFunds.setColumnWidth(2, 110)  # 固定宽度
 
         tb_header.setSectionResizeMode(3, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(3, 110)  # 固定宽度
+        cls.ui.tbvFunds.setColumnWidth(3, 65)  # 固定宽度
 
         tb_header.setSectionResizeMode(4, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(4, 80)  # 固定宽度
+        cls.ui.tbvFunds.setColumnWidth(4, 60)  # 固定宽度
 
         tb_header.setSectionResizeMode(5, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(5, 80)  # 固定宽度
+        cls.ui.tbvFunds.setColumnWidth(5, 50)  # 固定宽度
 
         tb_header.setSectionResizeMode(6, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(6, 85)  # 固定宽度
+        cls.ui.tbvFunds.setColumnWidth(6, 50)  # 固定宽度
 
         tb_header.setSectionResizeMode(7, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(7, 90)  # 固定宽度
+        cls.ui.tbvFunds.setColumnWidth(7, 50)  # 固定宽度
 
         tb_header.setSectionResizeMode(8, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(8, 120)  # 固定宽度
+        cls.ui.tbvFunds.setColumnWidth(8, 50)  # 固定宽度
 
         tb_header.setSectionResizeMode(9, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(9, 50)  # 固定宽度
+        cls.ui.tbvFunds.setColumnWidth(9, 55)  # 固定宽度
+
+        tb_header.setSectionResizeMode(10, QHeaderView.Fixed)
+        cls.ui.tbvFunds.setColumnWidth(10, 55)  # 固定宽度
+
+        tb_header.setSectionResizeMode(11, QHeaderView.Fixed)
+        cls.ui.tbvFunds.setColumnWidth(11, 55)  # 固定宽度
+
+        tb_header.setSectionResizeMode(12, QHeaderView.Fixed)
+        cls.ui.tbvFunds.setColumnWidth(12, 55)  # 固定宽度
+
+        tb_header.setSectionResizeMode(13, QHeaderView.Fixed)
+        cls.ui.tbvFunds.setColumnWidth(13, 60)  # 固定宽度
+
+        tb_header.setSectionResizeMode(14, QHeaderView.Fixed)
+        cls.ui.tbvFunds.setColumnWidth(14, 70)  # 固定宽度
+
+        tb_header.setSectionResizeMode(15, QHeaderView.Fixed)
+        cls.ui.tbvFunds.setColumnWidth(15, 70)  # 固定宽度
+
+        tb_header.setSectionResizeMode(16, QHeaderView.Fixed)
+        cls.ui.tbvFunds.setColumnWidth(16, 85)  # 下一开放日
+
+        tb_header.setSectionResizeMode(17, QHeaderView.Fixed)
+        cls.ui.tbvFunds.setColumnWidth(17, 120)  # 固定宽度
+
+        tb_header.setSectionResizeMode(18, QHeaderView.Fixed)
+        cls.ui.tbvFunds.setColumnWidth(18, 50)  # 固定宽度
+
         cls._log.info("设置表样式完成")
 
 
