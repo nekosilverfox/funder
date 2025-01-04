@@ -90,9 +90,6 @@ class MainWindow(QMainWindow):
 
         tb_header.setSectionResizeMode(9, QHeaderView.Fixed)
         cls.ui.tbvFunds.setColumnWidth(9, 50)  # 固定宽度
-        # tb_header.setSectionResizeMode(0, QHeaderView.ResizeToContents)  # 根据内容调整列宽
-        # tb_header.setSectionResizeMode(2, QHeaderView.ResizeToContents)  # 根据内容调整列宽
-        # tb_header.setSectionResizeMode(4, QHeaderView.ResizeToContents)  # 根据内容调整列宽
         cls._log.info("设置表样式完成")
 
 
