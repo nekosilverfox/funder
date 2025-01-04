@@ -29,12 +29,12 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout_2 = QHBoxLayout(self.centralwidget)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.widget_3 = QWidget(self.centralwidget)
-        self.widget_3.setObjectName(u"widget_3")
-        self.verticalLayout = QVBoxLayout(self.widget_3)
+        self.widget_table = QWidget(self.centralwidget)
+        self.widget_table.setObjectName(u"widget_table")
+        self.verticalLayout = QVBoxLayout(self.widget_table)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.widget = QWidget(self.widget_3)
+        self.widget = QWidget(self.widget_table)
         self.widget.setObjectName(u"widget")
         self.horizontalLayout = QHBoxLayout(self.widget)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
@@ -67,17 +67,17 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addWidget(self.widget)
 
-        self.tableView = QTableView(self.widget_3)
-        self.tableView.setObjectName(u"tableView")
+        self.tbvFunds = QTableView(self.widget_table)
+        self.tbvFunds.setObjectName(u"tbvFunds")
 
-        self.verticalLayout.addWidget(self.tableView)
+        self.verticalLayout.addWidget(self.tbvFunds)
 
 
-        self.horizontalLayout_2.addWidget(self.widget_3)
+        self.horizontalLayout_2.addWidget(self.widget_table)
 
         self.widget_4 = QWidget(self.centralwidget)
         self.widget_4.setObjectName(u"widget_4")
-        self.widget_4.setMinimumSize(QSize(300, 0))
+        self.widget_4.setMinimumSize(QSize(350, 0))
         self.widget_4.setMaximumSize(QSize(350, 16777215))
         self.verticalLayout_2 = QVBoxLayout(self.widget_4)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")

@@ -4,6 +4,7 @@
         "form.ui",
         "common.py",
         "logger.py",
-        "fund_getter_thread.py"
+        "fund_getter_thread.py",
+        "dataframe_model.py"
     ]
 }

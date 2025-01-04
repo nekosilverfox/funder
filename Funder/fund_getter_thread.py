@@ -41,7 +41,7 @@ class FundGetterThread(QThread):
 
             # 最终的基金数据
             self.progress_signal.emit("整理基金数据...")
-            final_df = merged_df.drop(columns=["序号", "拼音全称"])
+            final_df = merged_df.drop(columns=["序号", "拼音全称", "购买起点", "最新净值/万份收益-报告时间"])
 
             self.progress_signal.emit("获取所有基金数据完成")
             self.result_signal.emit(final_df)  # 发送结果到主线程
