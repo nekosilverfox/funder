@@ -1,1 +1,8 @@
-PySide6
+PySide6~=6.8.1.1
+
+pandas~=2.2.3
+akshare~=1.15.65
+pip~=23.2.1
+wheel~=0.41.2
+lxml~=5.3.0
+setuptools~=68.2.0

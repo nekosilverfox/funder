@@ -3,6 +3,7 @@
         "mainwindow.py",
         "form.ui",
         "common.py",
-        "logger.py"
+        "logger.py",
+        "fund_getter_thread.py"
     ]
 }

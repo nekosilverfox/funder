@@ -40,5 +40,5 @@ class Common:
         return cls._all_fund
 
     @classmethod
-    def get__all_fund(cls):
+    def get_all_fund(cls):
         return cls._all_fund
