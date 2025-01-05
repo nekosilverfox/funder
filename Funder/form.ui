@@ -125,98 +125,98 @@
            <number>0</number>
           </property>
           <item row="1" column="1">
-           <widget class="QCheckBox" name="checkBox">
+           <widget class="QCheckBox" name="cb1Week">
             <property name="text">
              <string>近1周 (%)</string>
             </property>
            </widget>
           </item>
           <item row="1" column="4">
-           <widget class="QCheckBox" name="checkBox_4">
+           <widget class="QCheckBox" name="cb6Month">
             <property name="text">
              <string>近6月 (%)</string>
             </property>
            </widget>
           </item>
           <item row="1" column="5">
-           <widget class="QCheckBox" name="checkBox_5">
+           <widget class="QCheckBox" name="cb1Year">
             <property name="text">
              <string>近1年 (%)</string>
             </property>
            </widget>
           </item>
           <item row="1" column="6">
-           <widget class="QCheckBox" name="checkBox_6">
+           <widget class="QCheckBox" name="cb2Year">
             <property name="text">
              <string>近2年 (%)</string>
             </property>
            </widget>
           </item>
           <item row="1" column="8">
-           <widget class="QCheckBox" name="checkBox_8">
+           <widget class="QCheckBox" name="cbThisYear">
             <property name="text">
              <string>今年来 (%)</string>
             </property>
            </widget>
           </item>
           <item row="1" column="9">
-           <widget class="QCheckBox" name="checkBox_9">
+           <widget class="QCheckBox" name="cbFromSetup">
             <property name="text">
              <string>成立来 (%)</string>
             </property>
            </widget>
           </item>
           <item row="2" column="2">
-           <widget class="QCheckBox" name="checkBox_11">
+           <widget class="QCheckBox" name="cbCanBuy">
             <property name="text">
              <string>申购状态</string>
             </property>
            </widget>
           </item>
           <item row="1" column="7">
-           <widget class="QCheckBox" name="checkBox_7">
+           <widget class="QCheckBox" name="cb3Year">
             <property name="text">
              <string>近3年 (%)</string>
             </property>
            </widget>
           </item>
           <item row="2" column="5">
-           <widget class="QCheckBox" name="checkBox_14">
+           <widget class="QCheckBox" name="cbDayQuota">
             <property name="text">
              <string>日累计限定金额</string>
             </property>
            </widget>
           </item>
           <item row="1" column="3">
-           <widget class="QCheckBox" name="checkBox_3">
+           <widget class="QCheckBox" name="cb3Month">
             <property name="text">
              <string>近3月 (%)</string>
             </property>
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QCheckBox" name="checkBox_10">
+           <widget class="QCheckBox" name="cbFundType">
             <property name="text">
              <string>基金类型</string>
             </property>
            </widget>
           </item>
           <item row="2" column="3">
-           <widget class="QCheckBox" name="checkBox_12">
+           <widget class="QCheckBox" name="cbCanSale">
             <property name="text">
              <string>赎回状态</string>
             </property>
            </widget>
           </item>
           <item row="2" column="4">
-           <widget class="QCheckBox" name="checkBox_13">
+           <widget class="QCheckBox" name="cbNextOpenDay">
             <property name="text">
              <string>下一开放日</string>
             </property>
            </widget>
           </item>
           <item row="1" column="2">
-           <widget class="QCheckBox" name="checkBox_2">
+           <widget class="QCheckBox" name="cb1Month">
             <property name="text">
              <string>近1月 (%)</string>
             </property>
