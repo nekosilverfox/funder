@@ -10,6 +10,11 @@
     <height>871</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <pointsize>12</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
@@ -49,6 +54,7 @@
            <widget class="QLabel" name="label_3">
             <property name="font">
              <font>
+              <pointsize>12</pointsize>
               <bold>true</bold>
              </font>
             </property>
@@ -220,6 +226,7 @@
            <widget class="QLabel" name="label_4">
             <property name="font">
              <font>
+              <pointsize>12</pointsize>
               <italic>true</italic>
               <bold>true</bold>
               <underline>false</underline>
@@ -237,8 +244,12 @@
         <widget class="QTableView" name="tbvFunds">
          <property name="font">
           <font>
+           <pointsize>12</pointsize>
            <underline>false</underline>
           </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
          </property>
         </widget>
        </item>

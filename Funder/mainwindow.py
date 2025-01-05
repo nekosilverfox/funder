@@ -73,21 +73,6 @@ class MainWindow(QMainWindow):
     def set_tb_header_style(cls):
         """设置表头样式，必须在数据添加之后调用，否则会因为越界导致崩溃"""
         cls._log.info("设置表样式")
-        cls.ui.tbvFunds.setStyleSheet("""
-                    /* 表格整体背景颜色 */
-                    QTableView {
-                        background-color: #181D1F;
-                        gridline-color: #242830;
-                        alternate-background-color: #182D0F;
-                        selection-background-color: #273B5A;
-                    }
-
-                    /* 单元格字体样式 */
-                    QTableView::item {
-                        font-size: 10px;
-                    }
-                """)
-
         cls.ui.tbvFunds.verticalHeader().setVisible(False)  # 取消显示水平表头
 
         tb_header = cls.ui.tbvFunds.horizontalHeader()
@@ -103,34 +88,34 @@ class MainWindow(QMainWindow):
         cls.ui.tbvFunds.setColumnWidth(3, 65)  # 固定宽度
 
         tb_header.setSectionResizeMode(4, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(4, 60)  # 固定宽度
+        cls.ui.tbvFunds.setColumnWidth(4, 60)  # 日增长率
 
         tb_header.setSectionResizeMode(5, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(5, 50)  # 固定宽度
+        cls.ui.tbvFunds.setColumnWidth(5, 55)  # 近1周
 
         tb_header.setSectionResizeMode(6, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(6, 50)  # 固定宽度
+        cls.ui.tbvFunds.setColumnWidth(6, 55)  # 近1月
 
         tb_header.setSectionResizeMode(7, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(7, 50)  # 固定宽度
+        cls.ui.tbvFunds.setColumnWidth(7, 55)  # 近3月
 
         tb_header.setSectionResizeMode(8, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(8, 50)  # 固定宽度
+        cls.ui.tbvFunds.setColumnWidth(8, 55)  # 近6月
 
         tb_header.setSectionResizeMode(9, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(9, 55)  # 固定宽度
+        cls.ui.tbvFunds.setColumnWidth(9, 63)  # 近1年
 
         tb_header.setSectionResizeMode(10, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(10, 55)  # 固定宽度
+        cls.ui.tbvFunds.setColumnWidth(10, 63)  # 近2年
 
         tb_header.setSectionResizeMode(11, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(11, 55)  # 固定宽度
+        cls.ui.tbvFunds.setColumnWidth(11, 63)  # 近3年
 
         tb_header.setSectionResizeMode(12, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(12, 55)  # 固定宽度
+        cls.ui.tbvFunds.setColumnWidth(12, 60)  # 今年来
 
         tb_header.setSectionResizeMode(13, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(13, 60)  # 固定宽度
+        cls.ui.tbvFunds.setColumnWidth(13, 65)  # 成立来
 
         tb_header.setSectionResizeMode(14, QHeaderView.Fixed)
         cls.ui.tbvFunds.setColumnWidth(14, 70)  # 固定宽度
@@ -142,7 +127,7 @@ class MainWindow(QMainWindow):
         cls.ui.tbvFunds.setColumnWidth(16, 85)  # 下一开放日
 
         tb_header.setSectionResizeMode(17, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(17, 120)  # 固定宽度
+        cls.ui.tbvFunds.setColumnWidth(17, 110)  # 固定宽度
 
         tb_header.setSectionResizeMode(18, QHeaderView.Fixed)
         cls.ui.tbvFunds.setColumnWidth(18, 50)  # 固定宽度
@@ -152,6 +137,25 @@ class MainWindow(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
+    # 设置全局样式表
+    app.setStyleSheet("""
+        /* 设置整个应用程序的背景为黑色，文字为白色 */
+        QWidget {
+            background-color: #31363E;
+            color: #D3DAE7;
+        }
+
+        /* 表格整体背景颜色 */
+        QTableView {
+            background-color: #1B1D1F;
+            gridline-color: #242830;
+            alternate-background-color: #182D0F;
+            selection-background-color: #273B5A;
+        }
+        QTableView::item:selected {
+                color: inherit; /* 选中时字体颜色保持与未选中一致 */
+            }
+    """)
 
     Logger.get_logger().info("程序初始化...")
 

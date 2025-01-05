@@ -31,36 +31,69 @@ class DataFrameModel(QAbstractTableModel):
         value = self._data.iloc[row, col]
 
         if role == Qt.DisplayRole:
-            # 返回数据作为字符串
-            return str(value)
+            # 判断是否为缺失值 (NaN 或 NaT)
+            if pd.isna(value) or pd.isnull(value):  # 判断是否是 NaN 或 NaT
+                return "-"  # 替换为 "-"
+            elif self._data.columns[col] == "日累计限定金额" and isinstance(value, float):
+                return f"{int(value)}"  # 转换为整数格式
+            elif (self._data.columns[col] == "日增长率"
+                  or self._data.columns[col] == "近1周"
+                  or self._data.columns[col] == "近1月"
+                  or self._data.columns[col] == "近3月"
+                  or self._data.columns[col] == "近6月"
+                  or self._data.columns[col] == "近1年"
+                  or self._data.columns[col] == "近2年"
+                  or self._data.columns[col] == "近3年"
+                  or self._data.columns[col] == "今年来"
+                  or self._data.columns[col] == "成立来"):
+                return f"{value}%"  # 添加百分号
 
+            return str(value)  # 返回正常数据
+
+        # Qt.ForegroundRole 的优先级高于样式表
         if role == Qt.ForegroundRole:
             # 设置文字颜色
             if self._data.columns[col] == "手续费" and isinstance(value, (float, int)) and value > 0.15:
-                return QBrush(QColor("red"))  # 手续费大于 0.15 的文字为红色
+                return QBrush(QColor("#F03D44"))  # 手续费大于 0.15 的文字为红色
             elif self._data.columns[col] == "手续费" and isinstance(value, (float, int)) and value <= 0.15:
-                return QBrush(QColor("green"))  # 手续费小于于 0.15 的文字为绿色
+                return QBrush(QColor("#4EBC76"))  # 手续费小于于 0.15 的文字为绿色
 
             elif self._data.columns[col] == "申购状态" and value == "开放申购":
-                return QBrush(QColor("green"))
+                return QBrush(QColor("#4EBC76"))
             elif self._data.columns[col] == "申购状态" and value == "限大额":
                 return QBrush(QColor("yellow"))
             elif self._data.columns[col] == "申购状态" and value == "暂停申购":
-                return QBrush(QColor("red"))
+                return QBrush(QColor("#F03D44"))
 
             elif self._data.columns[col] == "赎回状态" and value == "开放赎回":
-                return QBrush(QColor("green"))
+                return QBrush(QColor("#4EBC76"))
             elif self._data.columns[col] == "赎回状态" and value == "暂停赎回":
-                return QBrush(QColor("red"))
+                return QBrush(QColor("#F03D44"))
 
             elif self._data.columns[col] == "日累计限定金额" and isinstance(value, (float, int)) and value >= 10000:
-                return QBrush(QColor("green"))
+                return QBrush(QColor("#4EBC76"))
             elif self._data.columns[col] == "日累计限定金额" and isinstance(value, (float, int)) and value < 10000 and value >= 1000:
                 return QBrush(QColor("yellow"))
             elif self._data.columns[col] == "日累计限定金额" and isinstance(value, (float, int)) and value < 1000 and value >= 300:
                 return QBrush(QColor("orange"))
             elif self._data.columns[col] == "日累计限定金额" and isinstance(value, (float, int)) and value < 300:
-                return QBrush(QColor("red"))
+                return QBrush(QColor("#F03D44"))
+            elif (self._data.columns[col] == "日增长率"
+                  or self._data.columns[col] == "近1周"
+                  or self._data.columns[col] == "近1月"
+                  or self._data.columns[col] == "近3月"
+                  or self._data.columns[col] == "近6月"
+                  or self._data.columns[col] == "近1年"
+                  or self._data.columns[col] == "近2年"
+                  or self._data.columns[col] == "近3年"
+                  or self._data.columns[col] == "今年来"
+                  or self._data.columns[col] == "成立来"):
+                if value > 0 and (not pd.isna(value) or not pd.isnull(value)):
+                    return QBrush(QColor("#F03D44"))
+                elif value <= 0 and (not pd.isna(value) or not pd.isnull(value)):
+                    return QBrush(QColor("#4EBC76"))
+            else:
+                return QBrush(QColor("#CFD7E0"))  # 默认颜色
 
         return None
 
