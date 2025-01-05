@@ -5,11 +5,12 @@
 #     pyside2-uic form.ui -o ui_form.py
 
 from logger import Logger
+
 Logger.init_logger()  # 初始化 Logger
 
 import sys
 
-from PySide6.QtCore import QTimer
+from PySide6.QtCore import Qt, QTimer
 from PySide6.QtWidgets import QApplication, QMainWindow, QTableView, QHeaderView, QProgressBar
 from ui_form import Ui_MainWindow
 
@@ -39,6 +40,24 @@ class MainWindow(QMainWindow):
         # 获取基金数据
         QTimer.singleShot(1000, self.reload_fund)  # 延迟 n 秒后执行 reload_fund 方法
 
+        self.connect_signal_solt()
+
+    def connect_signal_solt(self):
+        """连接信号和槽"""
+        self.ui.cb1Week.stateChanged.connect(lambda state: self.set_col_hidden(state, "近1周"))
+        self.ui.cb1Month.stateChanged.connect(lambda state: self.set_col_hidden(state, "近1月"))
+        self.ui.cb3Month.stateChanged.connect(lambda state: self.set_col_hidden(state, "近3月"))
+        self.ui.cb6Month.stateChanged.connect(lambda state: self.set_col_hidden(state, "近6月"))
+        self.ui.cb1Year.stateChanged.connect(lambda state: self.set_col_hidden(state, "近1年"))
+        self.ui.cb2Year.stateChanged.connect(lambda state: self.set_col_hidden(state, "近2年"))
+        self.ui.cb3Year.stateChanged.connect(lambda state: self.set_col_hidden(state, "近3年"))
+        self.ui.cbThisYear.stateChanged.connect(lambda state: self.set_col_hidden(state, "今年来"))
+        self.ui.cbFromSetup.stateChanged.connect(lambda state: self.set_col_hidden(state, "成立来"))
+        self.ui.cbFundType.stateChanged.connect(lambda state: self.set_col_hidden(state, "基金类型"))
+        self.ui.cbCanBuy.stateChanged.connect(lambda state: self.set_col_hidden(state, "申购状态"))
+        self.ui.cbCanSale.stateChanged.connect(lambda state: self.set_col_hidden(state, "赎回状态"))
+        self.ui.cbNextOpenDay.stateChanged.connect(lambda state: self.set_col_hidden(state, "下一开放日"))
+        self.ui.cbDayQuota.stateChanged.connect(lambda state: self.set_col_hidden(state, "日累计限定金额"))
 
     def update_status_msg(cls, message):
         """更新状态栏状态"""
@@ -52,6 +71,26 @@ class MainWindow(QMainWindow):
         cls.ui.tbvFunds.setModel(DataFrameModel(cls._fund))  # 创建 DataFrameModel 并绑定到 QTableView
         cls.set_tb_header_style()  # 设置表样式
         cls.statusBar().removeWidget(cls.loding_bar)  # 移除进度条
+
+        # 连接复选框对应表列的信号和槽
+        cls.ui.cb1Week.setChecked(True)
+        cls.ui.cb1Month.setChecked(True)
+        cls.ui.cb3Month.setChecked(True)
+        cls.ui.cb6Month.setChecked(True)
+        cls.ui.cb1Year.setChecked(True)
+        cls.ui.cb2Year.setChecked(False)
+        cls.set_col_hidden(0, "近2年")
+        cls.ui.cb3Year.setChecked(False)
+        cls.set_col_hidden(0, "近3年")
+        cls.ui.cbThisYear.setChecked(True)
+        cls.ui.cbFromSetup.setChecked(True)
+        cls.ui.cbFundType.setChecked(True)
+        cls.ui.cbCanBuy.setChecked(True)
+        cls.ui.cbCanSale.setChecked(False)
+        cls.set_col_hidden(0, "赎回状态")
+        cls.ui.cbNextOpenDay.setChecked(False)
+        cls.set_col_hidden(0, "下一开放日")
+        cls.ui.cbDayQuota.setChecked(True)
 
     def handle_error(cls, error_message):
         """处理错误"""
@@ -70,10 +109,22 @@ class MainWindow(QMainWindow):
         cls._log.info("开始获取基金数据")
         cls.thread.start()  # 启动子线程
 
+    def set_col_hidden(cls, state, col_name):
+        """根据复选框状态确认是否隐藏某些行"""
+        col_index = cls._fund.columns.get_loc(col_name)
+        # cls._log.info(f"ComboBox {col_name} 状态变为 {Qt.CheckState.Checked} 受影响表列下标 {col_index}")
+        if state == 2:
+            cls._log.info(f"ComboBox {col_name} 状态变为 Checked 受影响表列下标 {col_index}")
+            cls.ui.tbvFunds.setColumnHidden(col_index, False)
+        elif state == 0:
+            cls._log.info(f"ComboBox {col_name} 状态变为 UnChecked 受影响表列下标 {col_index}")
+            cls.ui.tbvFunds.setColumnHidden(col_index, True)
+
     def set_tb_header_style(cls):
         """设置表头样式，必须在数据添加之后调用，否则会因为越界导致崩溃"""
         cls._log.info("设置表样式")
-        cls.ui.tbvFunds.verticalHeader().setVisible(False)  # 取消显示水平表头
+        # cls.ui.tbvFunds.verticalHeader().setVisible(False)  # 取消显示水平表头
+        # cls.ui.tbvFunds.verticalHeader().setDefaultSectionSize(30)  # 设置固定行高为 35 像素
 
         tb_header = cls.ui.tbvFunds.horizontalHeader()
         tb_header.setSectionResizeMode(QHeaderView.Stretch)  # 自动拉伸
@@ -82,7 +133,7 @@ class MainWindow(QMainWindow):
         cls.ui.tbvFunds.setColumnWidth(0, 65)  # 固定宽度
 
         tb_header.setSectionResizeMode(2, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(2, 110)  # 固定宽度
+        cls.ui.tbvFunds.setColumnWidth(2, 110)  # 基金类型
 
         tb_header.setSectionResizeMode(3, QHeaderView.Fixed)
         cls.ui.tbvFunds.setColumnWidth(3, 65)  # 固定宽度
@@ -118,10 +169,10 @@ class MainWindow(QMainWindow):
         cls.ui.tbvFunds.setColumnWidth(13, 65)  # 成立来
 
         tb_header.setSectionResizeMode(14, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(14, 70)  # 固定宽度
+        cls.ui.tbvFunds.setColumnWidth(14, 70)  # 申购状态
 
         tb_header.setSectionResizeMode(15, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(15, 70)  # 固定宽度
+        cls.ui.tbvFunds.setColumnWidth(15, 70)  # 赎回状态
 
         tb_header.setSectionResizeMode(16, QHeaderView.Fixed)
         cls.ui.tbvFunds.setColumnWidth(16, 85)  # 下一开放日

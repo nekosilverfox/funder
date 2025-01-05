@@ -94,75 +94,75 @@ class Ui_MainWindow(object):
         self.gridLayout = QGridLayout(self.widget_2)
         self.gridLayout.setObjectName(u"gridLayout")
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
-        self.checkBox = QCheckBox(self.widget_2)
-        self.checkBox.setObjectName(u"checkBox")
+        self.cb1Week = QCheckBox(self.widget_2)
+        self.cb1Week.setObjectName(u"cb1Week")
 
-        self.gridLayout.addWidget(self.checkBox, 1, 1, 1, 1)
+        self.gridLayout.addWidget(self.cb1Week, 1, 1, 1, 1)
 
-        self.checkBox_4 = QCheckBox(self.widget_2)
-        self.checkBox_4.setObjectName(u"checkBox_4")
+        self.cb6Month = QCheckBox(self.widget_2)
+        self.cb6Month.setObjectName(u"cb6Month")
 
-        self.gridLayout.addWidget(self.checkBox_4, 1, 4, 1, 1)
+        self.gridLayout.addWidget(self.cb6Month, 1, 4, 1, 1)
 
-        self.checkBox_5 = QCheckBox(self.widget_2)
-        self.checkBox_5.setObjectName(u"checkBox_5")
+        self.cb1Year = QCheckBox(self.widget_2)
+        self.cb1Year.setObjectName(u"cb1Year")
 
-        self.gridLayout.addWidget(self.checkBox_5, 1, 5, 1, 1)
+        self.gridLayout.addWidget(self.cb1Year, 1, 5, 1, 1)
 
-        self.checkBox_6 = QCheckBox(self.widget_2)
-        self.checkBox_6.setObjectName(u"checkBox_6")
+        self.cb2Year = QCheckBox(self.widget_2)
+        self.cb2Year.setObjectName(u"cb2Year")
 
-        self.gridLayout.addWidget(self.checkBox_6, 1, 6, 1, 1)
+        self.gridLayout.addWidget(self.cb2Year, 1, 6, 1, 1)
 
-        self.checkBox_8 = QCheckBox(self.widget_2)
-        self.checkBox_8.setObjectName(u"checkBox_8")
+        self.cbThisYear = QCheckBox(self.widget_2)
+        self.cbThisYear.setObjectName(u"cbThisYear")
 
-        self.gridLayout.addWidget(self.checkBox_8, 1, 8, 1, 1)
+        self.gridLayout.addWidget(self.cbThisYear, 1, 8, 1, 1)
 
-        self.checkBox_9 = QCheckBox(self.widget_2)
-        self.checkBox_9.setObjectName(u"checkBox_9")
+        self.cbFromSetup = QCheckBox(self.widget_2)
+        self.cbFromSetup.setObjectName(u"cbFromSetup")
 
-        self.gridLayout.addWidget(self.checkBox_9, 1, 9, 1, 1)
+        self.gridLayout.addWidget(self.cbFromSetup, 1, 9, 1, 1)
 
-        self.checkBox_11 = QCheckBox(self.widget_2)
-        self.checkBox_11.setObjectName(u"checkBox_11")
+        self.cbCanBuy = QCheckBox(self.widget_2)
+        self.cbCanBuy.setObjectName(u"cbCanBuy")
 
-        self.gridLayout.addWidget(self.checkBox_11, 2, 2, 1, 1)
+        self.gridLayout.addWidget(self.cbCanBuy, 2, 2, 1, 1)
 
-        self.checkBox_7 = QCheckBox(self.widget_2)
-        self.checkBox_7.setObjectName(u"checkBox_7")
+        self.cb3Year = QCheckBox(self.widget_2)
+        self.cb3Year.setObjectName(u"cb3Year")
 
-        self.gridLayout.addWidget(self.checkBox_7, 1, 7, 1, 1)
+        self.gridLayout.addWidget(self.cb3Year, 1, 7, 1, 1)
 
-        self.checkBox_14 = QCheckBox(self.widget_2)
-        self.checkBox_14.setObjectName(u"checkBox_14")
+        self.cbDayQuota = QCheckBox(self.widget_2)
+        self.cbDayQuota.setObjectName(u"cbDayQuota")
 
-        self.gridLayout.addWidget(self.checkBox_14, 2, 5, 1, 1)
+        self.gridLayout.addWidget(self.cbDayQuota, 2, 5, 1, 1)
 
-        self.checkBox_3 = QCheckBox(self.widget_2)
-        self.checkBox_3.setObjectName(u"checkBox_3")
+        self.cb3Month = QCheckBox(self.widget_2)
+        self.cb3Month.setObjectName(u"cb3Month")
 
-        self.gridLayout.addWidget(self.checkBox_3, 1, 3, 1, 1)
+        self.gridLayout.addWidget(self.cb3Month, 1, 3, 1, 1)
 
-        self.checkBox_10 = QCheckBox(self.widget_2)
-        self.checkBox_10.setObjectName(u"checkBox_10")
+        self.cbFundType = QCheckBox(self.widget_2)
+        self.cbFundType.setObjectName(u"cbFundType")
 
-        self.gridLayout.addWidget(self.checkBox_10, 2, 1, 1, 1)
+        self.gridLayout.addWidget(self.cbFundType, 2, 1, 1, 1)
 
-        self.checkBox_12 = QCheckBox(self.widget_2)
-        self.checkBox_12.setObjectName(u"checkBox_12")
+        self.cbCanSale = QCheckBox(self.widget_2)
+        self.cbCanSale.setObjectName(u"cbCanSale")
 
-        self.gridLayout.addWidget(self.checkBox_12, 2, 3, 1, 1)
+        self.gridLayout.addWidget(self.cbCanSale, 2, 3, 1, 1)
 
-        self.checkBox_13 = QCheckBox(self.widget_2)
-        self.checkBox_13.setObjectName(u"checkBox_13")
+        self.cbNextOpenDay = QCheckBox(self.widget_2)
+        self.cbNextOpenDay.setObjectName(u"cbNextOpenDay")
 
-        self.gridLayout.addWidget(self.checkBox_13, 2, 4, 1, 1)
+        self.gridLayout.addWidget(self.cbNextOpenDay, 2, 4, 1, 1)
 
-        self.checkBox_2 = QCheckBox(self.widget_2)
-        self.checkBox_2.setObjectName(u"checkBox_2")
+        self.cb1Month = QCheckBox(self.widget_2)
+        self.cb1Month.setObjectName(u"cb1Month")
 
-        self.gridLayout.addWidget(self.checkBox_2, 1, 2, 1, 1)
+        self.gridLayout.addWidget(self.cb1Month, 1, 2, 1, 1)
 
         self.label_4 = QLabel(self.widget_2)
         self.label_4.setObjectName(u"label_4")
@@ -226,20 +226,20 @@ class Ui_MainWindow(object):
         self.label.setText(QCoreApplication.translate("MainWindow", u"\u6b63\u5411\u7b5b\u9009\u8bcd", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"\u53cd\u5411\u7b5b\u9009\u8bcd", None))
         self.pushButton.setText(QCoreApplication.translate("MainWindow", u"\u7b5b\u9009", None))
-        self.checkBox.setText(QCoreApplication.translate("MainWindow", u"\u8fd11\u5468 (%)", None))
-        self.checkBox_4.setText(QCoreApplication.translate("MainWindow", u"\u8fd16\u6708 (%)", None))
-        self.checkBox_5.setText(QCoreApplication.translate("MainWindow", u"\u8fd11\u5e74 (%)", None))
-        self.checkBox_6.setText(QCoreApplication.translate("MainWindow", u"\u8fd12\u5e74 (%)", None))
-        self.checkBox_8.setText(QCoreApplication.translate("MainWindow", u"\u4eca\u5e74\u6765 (%)", None))
-        self.checkBox_9.setText(QCoreApplication.translate("MainWindow", u"\u6210\u7acb\u6765 (%)", None))
-        self.checkBox_11.setText(QCoreApplication.translate("MainWindow", u"\u7533\u8d2d\u72b6\u6001", None))
-        self.checkBox_7.setText(QCoreApplication.translate("MainWindow", u"\u8fd13\u5e74 (%)", None))
-        self.checkBox_14.setText(QCoreApplication.translate("MainWindow", u"\u65e5\u7d2f\u8ba1\u9650\u5b9a\u91d1\u989d", None))
-        self.checkBox_3.setText(QCoreApplication.translate("MainWindow", u"\u8fd13\u6708 (%)", None))
-        self.checkBox_10.setText(QCoreApplication.translate("MainWindow", u"\u57fa\u91d1\u7c7b\u578b", None))
-        self.checkBox_12.setText(QCoreApplication.translate("MainWindow", u"\u8d4e\u56de\u72b6\u6001", None))
-        self.checkBox_13.setText(QCoreApplication.translate("MainWindow", u"\u4e0b\u4e00\u5f00\u653e\u65e5", None))
-        self.checkBox_2.setText(QCoreApplication.translate("MainWindow", u"\u8fd11\u6708 (%)", None))
+        self.cb1Week.setText(QCoreApplication.translate("MainWindow", u"\u8fd11\u5468 (%)", None))
+        self.cb6Month.setText(QCoreApplication.translate("MainWindow", u"\u8fd16\u6708 (%)", None))
+        self.cb1Year.setText(QCoreApplication.translate("MainWindow", u"\u8fd11\u5e74 (%)", None))
+        self.cb2Year.setText(QCoreApplication.translate("MainWindow", u"\u8fd12\u5e74 (%)", None))
+        self.cbThisYear.setText(QCoreApplication.translate("MainWindow", u"\u4eca\u5e74\u6765 (%)", None))
+        self.cbFromSetup.setText(QCoreApplication.translate("MainWindow", u"\u6210\u7acb\u6765 (%)", None))
+        self.cbCanBuy.setText(QCoreApplication.translate("MainWindow", u"\u7533\u8d2d\u72b6\u6001", None))
+        self.cb3Year.setText(QCoreApplication.translate("MainWindow", u"\u8fd13\u5e74 (%)", None))
+        self.cbDayQuota.setText(QCoreApplication.translate("MainWindow", u"\u65e5\u7d2f\u8ba1\u9650\u5b9a\u91d1\u989d", None))
+        self.cb3Month.setText(QCoreApplication.translate("MainWindow", u"\u8fd13\u6708 (%)", None))
+        self.cbFundType.setText(QCoreApplication.translate("MainWindow", u"\u57fa\u91d1\u7c7b\u578b", None))
+        self.cbCanSale.setText(QCoreApplication.translate("MainWindow", u"\u8d4e\u56de\u72b6\u6001", None))
+        self.cbNextOpenDay.setText(QCoreApplication.translate("MainWindow", u"\u4e0b\u4e00\u5f00\u653e\u65e5", None))
+        self.cb1Month.setText(QCoreApplication.translate("MainWindow", u"\u8fd11\u6708 (%)", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"\u5171 N \u6761\u6570\u636e", None))
     # retranslateUi
 
