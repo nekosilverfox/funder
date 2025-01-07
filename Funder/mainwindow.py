@@ -10,7 +10,7 @@ Logger.init_logger()  # 初始化 Logger
 
 import sys
 
-from PySide6.QtCore import Qt, QTimer
+from PySide6.QtCore import Qt, QTimer, QDateTime
 from PySide6.QtWidgets import QApplication, QMainWindow, QTableView, QHeaderView, QProgressBar
 from ui_form import Ui_MainWindow
 
@@ -66,7 +66,7 @@ class MainWindow(QMainWindow):
     def receive_fund_data(cls, data):
         """处理任务结果"""
         cls._fund = data
-        cls.statusBar().showMessage(f"成功获取公募基金数据 共 {cls._fund.shape[0]} 条数据")
+        cls.statusBar().showMessage(f'成功获取公募基金数据 共 {cls._fund.shape[0]} 条数据\t获取时间 {QDateTime.currentDateTime().toString("yyyy-MM-dd HH:mm:ss")}')
         cls._log.info(cls._fund)
         cls.ui.tbvFunds.setModel(DataFrameModel(cls._fund))  # 创建 DataFrameModel 并绑定到 QTableView
         cls.set_tb_header_style()  # 设置表样式
@@ -142,25 +142,25 @@ class MainWindow(QMainWindow):
         cls.ui.tbvFunds.setColumnWidth(4, 60)  # 日增长率
 
         tb_header.setSectionResizeMode(5, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(5, 55)  # 近1周
+        cls.ui.tbvFunds.setColumnWidth(5, 60)  # 近1周
 
         tb_header.setSectionResizeMode(6, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(6, 55)  # 近1月
+        cls.ui.tbvFunds.setColumnWidth(6, 60)  # 近1月
 
         tb_header.setSectionResizeMode(7, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(7, 55)  # 近3月
+        cls.ui.tbvFunds.setColumnWidth(7, 60)  # 近3月
 
         tb_header.setSectionResizeMode(8, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(8, 55)  # 近6月
+        cls.ui.tbvFunds.setColumnWidth(8, 60)  # 近6月
 
         tb_header.setSectionResizeMode(9, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(9, 63)  # 近1年
+        cls.ui.tbvFunds.setColumnWidth(9, 65)  # 近1年
 
         tb_header.setSectionResizeMode(10, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(10, 63)  # 近2年
+        cls.ui.tbvFunds.setColumnWidth(10, 65)  # 近2年
 
         tb_header.setSectionResizeMode(11, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(11, 63)  # 近3年
+        cls.ui.tbvFunds.setColumnWidth(11, 65)  # 近3年
 
         tb_header.setSectionResizeMode(12, QHeaderView.Fixed)
         cls.ui.tbvFunds.setColumnWidth(12, 60)  # 今年来
