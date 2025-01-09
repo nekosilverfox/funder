@@ -94,8 +94,23 @@ class DataFrameModel(QAbstractTableModel):
                     return QBrush(QColor("#4EBC76"))
             else:
                 return QBrush(QColor("#CFD7E0"))  # 默认颜色
-
         return None
+
+    def sort(self, column, order):
+        """实现排序功能"""
+        if (column < 0) or (column >= self.columnCount()):
+            return
+
+        self.layoutAboutToBeChanged.emit()
+
+        column_name = self._data.columns[column]
+        ascending = order == Qt.AscendingOrder
+        self._data.sort_values(by=column_name, ascending=ascending, inplace=True, kind='mergesort')  # 使用稳定排序
+        self._data.reset_index(drop=True, inplace=True)
+
+        self.layoutChanged.emit()
+        self._sort_column = column
+        self._sort_order = order
 
     def headerData(self, section, orientation, role=Qt.DisplayRole):
         # 提供表头数据
@@ -107,3 +122,4 @@ class DataFrameModel(QAbstractTableModel):
                 # 返回行索引
                 return str(self._data.index[section])
         return None
+

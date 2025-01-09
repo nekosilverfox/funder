@@ -58,6 +58,8 @@ class MainWindow(QMainWindow):
         self.ui.cbCanSale.stateChanged.connect(lambda state: self.set_col_hidden(state, "赎回状态"))
         self.ui.cbNextOpenDay.stateChanged.connect(lambda state: self.set_col_hidden(state, "下一开放日"))
         self.ui.cbDayQuota.stateChanged.connect(lambda state: self.set_col_hidden(state, "日累计限定金额"))
+        self.ui.cbT1Premium.stateChanged.connect(lambda state: self.set_col_hidden(state, "T-1溢价率"))
+
 
     def update_status_msg(cls, message):
         """更新状态栏状态"""
@@ -91,6 +93,8 @@ class MainWindow(QMainWindow):
         cls.ui.cbNextOpenDay.setChecked(False)
         cls.set_col_hidden(0, "下一开放日")
         cls.ui.cbDayQuota.setChecked(True)
+        cls.ui.cbT1Premium.setChecked(False)
+        cls.set_col_hidden(0, "T-1溢价率")
 
     def handle_error(cls, error_message):
         """处理错误"""
@@ -126,6 +130,7 @@ class MainWindow(QMainWindow):
         # cls.ui.tbvFunds.verticalHeader().setVisible(False)  # 取消显示水平表头
         # cls.ui.tbvFunds.verticalHeader().setDefaultSectionSize(30)  # 设置固定行高为 35 像素
 
+        cls.ui.tbvFunds.setSortingEnabled(True)  # 启用排序功能
         tb_header = cls.ui.tbvFunds.horizontalHeader()
         tb_header.setSectionResizeMode(QHeaderView.Stretch)  # 自动拉伸
 
@@ -182,6 +187,9 @@ class MainWindow(QMainWindow):
 
         tb_header.setSectionResizeMode(18, QHeaderView.Fixed)
         cls.ui.tbvFunds.setColumnWidth(18, 50)  # 固定宽度
+
+        tb_header.setSectionResizeMode(19, QHeaderView.Fixed)
+        cls.ui.tbvFunds.setColumnWidth(19, 55)  # 固定宽度
 
         cls._log.info("设置表样式完成")
 

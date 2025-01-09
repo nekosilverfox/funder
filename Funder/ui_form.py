@@ -175,6 +175,11 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addWidget(self.label_4, 2, 9, 1, 1)
 
+        self.cbT1Premium = QCheckBox(self.widget_2)
+        self.cbT1Premium.setObjectName(u"cbT1Premium")
+
+        self.gridLayout.addWidget(self.cbT1Premium, 2, 6, 1, 1)
+
 
         self.verticalLayout.addWidget(self.widget_2)
 
@@ -241,5 +246,6 @@ class Ui_MainWindow(object):
         self.cbNextOpenDay.setText(QCoreApplication.translate("MainWindow", u"\u4e0b\u4e00\u5f00\u653e\u65e5", None))
         self.cb1Month.setText(QCoreApplication.translate("MainWindow", u"\u8fd11\u6708 (%)", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"\u5171 N \u6761\u6570\u636e", None))
+        self.cbT1Premium.setText(QCoreApplication.translate("MainWindow", u"T-1\u6ea2\u4ef7\u7387", None))
     # retranslateUi
 
