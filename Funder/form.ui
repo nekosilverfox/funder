@@ -71,7 +71,14 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="lineEdit"/>
+           <widget class="QLineEdit" name="leIncludeWords"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnCleanIncludeWords">
+            <property name="text">
+             <string>清空</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="Line" name="line">
@@ -97,12 +104,12 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="lineEdit_2"/>
+           <widget class="QLineEdit" name="leExcludeWords"/>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QPushButton" name="btnCleanExcludeWords">
             <property name="text">
-             <string>筛选</string>
+             <string>清空</string>
             </property>
            </widget>
           </item>

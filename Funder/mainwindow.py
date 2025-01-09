@@ -9,6 +9,7 @@ from logger import Logger
 Logger.init_logger()  # 初始化 Logger
 
 import sys
+import pandas as pd
 
 from PySide6.QtCore import Qt, QTimer, QDateTime
 from PySide6.QtWidgets import QApplication, QMainWindow, QTableView, QHeaderView, QProgressBar
@@ -24,9 +25,12 @@ class MainWindow(QMainWindow):
 
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.loding_bar = None
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         # self.ui.setTitle("公募基金筛选器")
+
+        self.tbvModel = None
 
         # 向状态栏添加控件
         self.statusBar().showMessage("窗体初始化成功")
@@ -60,6 +64,11 @@ class MainWindow(QMainWindow):
         self.ui.cbDayQuota.stateChanged.connect(lambda state: self.set_col_hidden(state, "日累计限定金额"))
         self.ui.cbT1Premium.stateChanged.connect(lambda state: self.set_col_hidden(state, "T-1溢价率"))
 
+        self.ui.leIncludeWords.textChanged.connect(self.filter_by_fund_name)
+        self.ui.leExcludeWords.textChanged.connect(self.filter_by_fund_name)
+
+        self.ui.btnCleanIncludeWords.clicked.connect(self.ui.leIncludeWords.clear)
+        self.ui.btnCleanExcludeWords.clicked.connect(self.ui.leExcludeWords.clear)
 
     def update_status_msg(cls, message):
         """更新状态栏状态"""
@@ -70,7 +79,8 @@ class MainWindow(QMainWindow):
         cls._fund = data
         cls.statusBar().showMessage(f'成功获取公募基金数据 共 {cls._fund.shape[0]} 条数据\t获取时间 {QDateTime.currentDateTime().toString("yyyy-MM-dd HH:mm:ss")}')
         cls._log.info(cls._fund)
-        cls.ui.tbvFunds.setModel(DataFrameModel(cls._fund))  # 创建 DataFrameModel 并绑定到 QTableView
+        cls.tbvModel = DataFrameModel(cls._fund)
+        cls.ui.tbvFunds.setModel(cls.tbvModel)  # 创建 DataFrameModel 并绑定到 QTableView
         cls.set_tb_header_style()  # 设置表样式
         cls.statusBar().removeWidget(cls.loding_bar)  # 移除进度条
 
@@ -192,6 +202,31 @@ class MainWindow(QMainWindow):
         cls.ui.tbvFunds.setColumnWidth(19, 55)  # 固定宽度
 
         cls._log.info("设置表样式完成")
+
+    def filter_by_fund_name(self):
+        """根据正向和反向词过滤基金名称"""
+        include_input = self.ui.leIncludeWords.text().strip()
+        exclude_input = self.ui.leExcludeWords.text().strip()
+
+        # 将空格替换为 '|', 创建正则表达式的 alternation
+        include_words = '|'.join(include_input.split()) if include_input else None
+        exclude_words = '|'.join(exclude_input.split()) if exclude_input else None
+
+        self._log.info(f'正向过滤词：{include_words} 反向过滤词：{exclude_words}')
+
+        # 初始化 mask 为全 True
+        mask = pd.Series([True] * len(self._fund))
+
+        # 应用包含条件
+        if include_words:
+            mask &= self._fund["基金简称"].str.contains(include_words, regex=True, na=False)
+
+        # 应用排除条件
+        if exclude_words:
+            mask &= ~self._fund["基金简称"].str.contains(exclude_words, regex=True, na=False)
+
+        filter_fund = self._fund[mask]
+        self.tbvModel.resetDataFrame(pd.DataFrame(filter_fund))
 
 
 if __name__ == "__main__":

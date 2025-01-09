@@ -10,6 +10,9 @@ class DataFrameModel(QAbstractTableModel):
     def __init__(self, data: pd.DataFrame):
         super().__init__()
         self._data = data
+        self.include_words = []
+        self.exclude_words = []
+        self.filter_column = -1  # 默认不指定列
 
     def rowCount(self, parent=None):
         # 返回行数
@@ -123,3 +126,8 @@ class DataFrameModel(QAbstractTableModel):
                 return str(self._data.index[section])
         return None
 
+    def resetDataFrame(self, data: pd.DataFrame):
+        """重新设置模型的数据"""
+        self.beginResetModel()
+        self._data = data.copy()
+        self.endResetModel()

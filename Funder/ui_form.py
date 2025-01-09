@@ -57,10 +57,15 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout.addWidget(self.label)
 
-        self.lineEdit = QLineEdit(self.widget)
-        self.lineEdit.setObjectName(u"lineEdit")
+        self.leIncludeWords = QLineEdit(self.widget)
+        self.leIncludeWords.setObjectName(u"leIncludeWords")
 
-        self.horizontalLayout.addWidget(self.lineEdit)
+        self.horizontalLayout.addWidget(self.leIncludeWords)
+
+        self.btnCleanIncludeWords = QPushButton(self.widget)
+        self.btnCleanIncludeWords.setObjectName(u"btnCleanIncludeWords")
+
+        self.horizontalLayout.addWidget(self.btnCleanIncludeWords)
 
         self.line = QFrame(self.widget)
         self.line.setObjectName(u"line")
@@ -76,15 +81,15 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout.addWidget(self.label_2)
 
-        self.lineEdit_2 = QLineEdit(self.widget)
-        self.lineEdit_2.setObjectName(u"lineEdit_2")
+        self.leExcludeWords = QLineEdit(self.widget)
+        self.leExcludeWords.setObjectName(u"leExcludeWords")
 
-        self.horizontalLayout.addWidget(self.lineEdit_2)
+        self.horizontalLayout.addWidget(self.leExcludeWords)
 
-        self.pushButton = QPushButton(self.widget)
-        self.pushButton.setObjectName(u"pushButton")
+        self.btnCleanExcludeWords = QPushButton(self.widget)
+        self.btnCleanExcludeWords.setObjectName(u"btnCleanExcludeWords")
 
-        self.horizontalLayout.addWidget(self.pushButton)
+        self.horizontalLayout.addWidget(self.btnCleanExcludeWords)
 
 
         self.verticalLayout.addWidget(self.widget)
@@ -229,8 +234,9 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"\u6839\u636e\u57fa\u91d1\u540d\u79f0\u8fdb\u884c\u7b5b\u9009\uff08\u7b5b\u9009\u8bcd\u4f7f\u7528\u7a7a\u683c\u8fdb\u884c\u5206\u9694\uff09", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"\u6b63\u5411\u7b5b\u9009\u8bcd", None))
+        self.btnCleanIncludeWords.setText(QCoreApplication.translate("MainWindow", u"\u6e05\u7a7a", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"\u53cd\u5411\u7b5b\u9009\u8bcd", None))
-        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"\u7b5b\u9009", None))
+        self.btnCleanExcludeWords.setText(QCoreApplication.translate("MainWindow", u"\u6e05\u7a7a", None))
         self.cb1Week.setText(QCoreApplication.translate("MainWindow", u"\u8fd11\u5468 (%)", None))
         self.cb6Month.setText(QCoreApplication.translate("MainWindow", u"\u8fd16\u6708 (%)", None))
         self.cb1Year.setText(QCoreApplication.translate("MainWindow", u"\u8fd11\u5e74 (%)", None))
