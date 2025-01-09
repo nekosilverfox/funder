@@ -70,6 +70,7 @@ class MainWindow(QMainWindow):
         self.ui.btnCleanIncludeWords.clicked.connect(self.ui.leIncludeWords.clear)
         self.ui.btnCleanExcludeWords.clicked.connect(self.ui.leExcludeWords.clear)
 
+
     def update_status_msg(cls, message):
         """更新状态栏状态"""
         cls.statusBar().showMessage(message)
@@ -81,6 +82,8 @@ class MainWindow(QMainWindow):
         cls._log.info(cls._fund)
         cls.tbvModel = DataFrameModel(cls._fund)
         cls.ui.tbvFunds.setModel(cls.tbvModel)  # 创建 DataFrameModel 并绑定到 QTableView
+        cls.ui.tbvFunds.selectionModel().selectionChanged.connect(cls.tbvFundsSelectChanged)  # 连接选中行信号
+
         cls.set_tb_header_style()  # 设置表样式
         cls.statusBar().removeWidget(cls.loding_bar)  # 移除进度条
 
@@ -227,6 +230,23 @@ class MainWindow(QMainWindow):
 
         filter_fund = self._fund[mask]
         self.tbvModel.resetDataFrame(pd.DataFrame(filter_fund))
+
+    def tbvFundsSelectChanged(self):
+        """处理选择变化事件，获取选中行的数据或行索引"""
+        # 获取当前选中的行索引（QModelIndex 对象列表）
+        indexes = self.ui.tbvFunds.selectionModel().selectedRows()
+
+        # 由于选择模式为单选，列表中最多只有一个元素
+        row_data = None
+        if indexes:
+            index = indexes[0]  # 获取第一个选中的行 PySide6.QtCore.QModelIndex
+            row = index.row()  # 获取行号（0-based index）
+
+            # 获取整行数据
+            row_data = self._fund.iloc[row]
+        else:
+            return
+        self._log.info(f'选中行: {row}  基金代码：{row_data["基金代码"]}  基金简称：{row_data["基金简称"]}')
 
 
 if __name__ == "__main__":

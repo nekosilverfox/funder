@@ -15,11 +15,11 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QCheckBox, QFrame, QGridLayout,
-    QHBoxLayout, QHeaderView, QLabel, QLineEdit,
-    QMainWindow, QMenuBar, QPushButton, QSizePolicy,
-    QStatusBar, QTableView, QTextBrowser, QVBoxLayout,
-    QWidget)
+from PySide6.QtWidgets import (QAbstractItemView, QApplication, QCheckBox, QFrame,
+    QGridLayout, QHBoxLayout, QHeaderView, QLabel,
+    QLineEdit, QMainWindow, QMenuBar, QPushButton,
+    QSizePolicy, QStatusBar, QTableView, QTextBrowser,
+    QVBoxLayout, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -195,6 +195,8 @@ class Ui_MainWindow(object):
         font3.setUnderline(False)
         self.tbvFunds.setFont(font3)
         self.tbvFunds.setStyleSheet(u"")
+        self.tbvFunds.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
+        self.tbvFunds.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
 
         self.verticalLayout.addWidget(self.tbvFunds)
 
