@@ -18,8 +18,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QAbstractItemView, QApplication, QCheckBox, QFrame,
     QGridLayout, QHBoxLayout, QHeaderView, QLabel,
     QLineEdit, QMainWindow, QMenuBar, QPushButton,
-    QSizePolicy, QStatusBar, QTableView, QTextBrowser,
-    QVBoxLayout, QWidget)
+    QScrollArea, QSizePolicy, QStatusBar, QTableView,
+    QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -210,10 +210,26 @@ class Ui_MainWindow(object):
         self.verticalLayout_2 = QVBoxLayout(self.widget_4)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.textBrowser = QTextBrowser(self.widget_4)
-        self.textBrowser.setObjectName(u"textBrowser")
+        self.scrollArea = QScrollArea(self.widget_4)
+        self.scrollArea.setObjectName(u"scrollArea")
+        self.scrollArea.setWidgetResizable(True)
+        self.saFundInfo = QWidget()
+        self.saFundInfo.setObjectName(u"saFundInfo")
+        self.saFundInfo.setGeometry(QRect(0, 0, 298, 794))
+        self.verticalLayout_3 = QVBoxLayout(self.saFundInfo)
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.twFundInfo = QTreeWidget(self.saFundInfo)
+        __qtreewidgetitem = QTreeWidgetItem()
+        __qtreewidgetitem.setText(0, u"1");
+        self.twFundInfo.setHeaderItem(__qtreewidgetitem)
+        self.twFundInfo.setObjectName(u"twFundInfo")
 
-        self.verticalLayout_2.addWidget(self.textBrowser)
+        self.verticalLayout_3.addWidget(self.twFundInfo)
+
+        self.scrollArea.setWidget(self.saFundInfo)
+
+        self.verticalLayout_2.addWidget(self.scrollArea)
 
 
         self.horizontalLayout_2.addWidget(self.widget_4)

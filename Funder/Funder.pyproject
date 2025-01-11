@@ -5,6 +5,11 @@
         "common.py",
         "logger.py",
         "fund_getter_thread.py",
-        "dataframe_model.py"
+        "dataframe_model.py",
+        "fund_base_info_thread.py",
+        "fund_hold_type_thread.py",
+        "fund_buy_sale_detail_thread.py",
+        "fund_hold_detail_thread.py",
+        "fund_risk_thread.py"
     ]
 }
