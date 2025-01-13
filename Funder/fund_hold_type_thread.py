@@ -21,9 +21,11 @@ class FundHoldTypeThread(QThread):
             self.progress_signal.emit(f"获取基金 {self._fund_code} 仓位占比中...")
             data = ak.fund_individual_detail_hold_xq(symbol=self._fund_code, date=QDateTime.currentDateTime().toString("yyyyMMdd"))
             self.progress_signal.emit(f"获取基金 {self._fund_code} 仓位占比完成")
-            self.result_signal.emit(data)  # 发送结果到主线程
 
         except Exception as e:
+            data = None
             error_message = f"获取基金 {self._fund_code} 仓位占比时发生错误: {str(e)}"
             self.progress_signal.emit(error_message)
             self.error_signal.emit(error_message)  # 发送错误信号
+
+        self.result_signal.emit(data)  # 发送结果到主线程

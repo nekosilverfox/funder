@@ -1,7 +1,7 @@
 # This Python file uses the following encoding: utf-8
 
 
-from PySide6.QtCore import Qt, QThread, Signal
+from PySide6.QtCore import QThread, Signal
 import akshare as ak
 import pandas as pd
 

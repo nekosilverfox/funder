@@ -2,6 +2,7 @@ from PySide6.QtCore import QDateTime, QThread, Signal
 import akshare as ak
 import pandas as pd
 
+
 class FundHoldDetailThread(QThread):
     progress_signal = Signal(str)  # 用于传递进度日志
     result_signal = Signal(pd.DataFrame)  # 用于传递任务完成后的结果
@@ -32,7 +33,7 @@ class FundHoldDetailThread(QThread):
                 year = int(year) - 1
                 self.progress_signal.emit(f"获取 {year} 年基金 {self._fund_code} 仓位占比中...")
                 data = ak.fund_portfolio_hold_em(symbol=self._fund_code,
-                                                 date=year)
+                                                 date=str(year))
             except Exception as e:
                 is_succ = False
                 data = None

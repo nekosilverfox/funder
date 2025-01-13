@@ -72,6 +72,10 @@ class DataFrameModel(QAbstractTableModel):
                 return QBrush(QColor("#4EBC76"))
             elif self._data.columns[col] == "赎回状态" and value == "暂停赎回":
                 return QBrush(QColor("#F03D44"))
+            elif self._data.columns[col] == "赎回状态" and value == "封闭期":
+                return QBrush(QColor("#F03D44"))
+            elif self._data.columns[col] == "赎回状态" and value == "场内交易":
+                return QBrush(QColor("orange"))
 
             elif self._data.columns[col] == "日累计限定金额" and isinstance(value, (float, int)) and value >= 10000:
                 return QBrush(QColor("#4EBC76"))

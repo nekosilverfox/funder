@@ -1,6 +1,6 @@
 # This Python file uses the following encoding: utf-8
 
-from PySide6.QtCore import Qt, QThread, Signal
+from PySide6.QtCore import QThread, Signal
 import akshare as ak
 import pandas as pd
 
@@ -20,9 +20,11 @@ class FundRiskThread(QThread):
             self.progress_signal.emit(f"获取基金 {self._fund_code} 风险信息中...")
             data = ak.fund_individual_analysis_xq(symbol=self._fund_code)
             self.progress_signal.emit(f"获取基金 {self._fund_code} 风险信息完成")
-            self.result_signal.emit(data)  # 发送结果到主线程
 
         except Exception as e:
+            data = None
             error_message = f"获取基金 {self._fund_code} 风险信息时发生错误: {str(e)}"
             self.progress_signal.emit(error_message)
             self.error_signal.emit(error_message)  # 发送错误信号
+
+        self.result_signal.emit(data)  # 发送结果到主线程
