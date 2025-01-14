@@ -34,10 +34,15 @@ class FundHoldDetailThread(QThread):
 
         if not is_succ:
             try:
+                is_succ = True
                 year = int(year) - 1
                 self.progress_signal.emit(f"获取 {year} 年基金 {self._fund_code} 仓位占比中...")
                 data = ak.fund_portfolio_hold_em(symbol=self._fund_code,
                                                  date=str(year))
+                last_report = data.iloc[-1, -1]  # 最后的报告时间如：2024年3季度股票投资明细
+                data = data[data["季度"] == last_report]
+                data = data[["股票代码", "股票名称", "占净值比例"]]
+
             except Exception as e:
                 is_succ = False
                 data = None

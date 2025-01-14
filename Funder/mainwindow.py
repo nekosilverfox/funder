@@ -12,13 +12,18 @@ import sys
 import pandas as pd
 
 from PySide6.QtCore import Qt, QTimer, QDateTime
-from PySide6.QtWidgets import QApplication, QMainWindow, QTableView, QHeaderView, QProgressBar
+from PySide6.QtWidgets import QApplication, QMainWindow, QHeaderView, QProgressBar
 from ui_form import Ui_MainWindow
 
 from fund_getter_thread import FundGetterThread
 from dataframe_model import DataFrameModel
+from fund_base_info_thread import FundBaseInfoThread
 from fund_profit_probability_thread import FundProfitProbabilityThread
-
+from fund_buy_sale_detail_thread import FundBuySaleDetailThread
+from fund_hold_type_thread import FundHoldTypeThread
+from fund_hold_detail_thread import FundHoldDetailThread
+from fund_profit_probability_thread import FundProfitProbabilityThread
+from fund_risk_thread import FundRiskThread
 
 class MainWindow(QMainWindow):
     _fund = None
@@ -47,13 +52,44 @@ class MainWindow(QMainWindow):
         self.thread_all_fund_list.result_signal.connect(self.receive_fund_data)  # 连接结果信号到结果处理方法
         self.thread_all_fund_list.error_signal.connect(self.handle_error)  # 连接错误信号到错误处理方法
 
+        # 基金基本信息
+        self.thread_fund_base_info = FundBaseInfoThread(self._log)
+        self.thread_fund_base_info.progress_signal.connect(self.update_status_msg)
+        self.thread_fund_base_info.result_signal.connect(self.receive_fund_base_info)
+        self.thread_fund_base_info.error_signal.connect(self.handle_error)
+
+        # 买卖信息
+        self.thread_buy_sale_detail = FundBuySaleDetailThread(self._log)
+        self.thread_buy_sale_detail.progress_signal.connect(self.update_status_msg)
+        self.thread_buy_sale_detail.result_signal.connect(self.receive_buy_sale_detail)
+        self.thread_buy_sale_detail.error_signal.connect(self.handle_error)
+
+        # 持仓类型信息
+        self.thread_fund_hold_type = FundHoldTypeThread(self._log)
+        self.thread_fund_hold_type.progress_signal.connect(self.update_status_msg)
+        self.thread_fund_hold_type.result_signal.connect(self.receive_fund_hold_type)
+        self.thread_fund_hold_type.error_signal.connect(self.handle_error)
+
+        # 持仓细节
+        self.thread_fund_hold_detail = FundHoldDetailThread(self._log)
+        self.thread_fund_hold_detail.progress_signal.connect(self.update_status_msg)
+        self.thread_fund_hold_detail.result_signal.connect(self.receive_fund_hold_detail)
+        self.thread_fund_hold_detail.error_signal.connect(self.handle_error)
+
+        # 风险信息（波动回撤等）
+        self.thread_fund_risk = FundRiskThread(self._log)
+        self.thread_fund_risk.progress_signal.connect(self.update_status_msg)
+        self.thread_fund_risk.result_signal.connect(self.receive_fund_risk)
+        self.thread_fund_risk.error_signal.connect(self.handle_error)
+
+        # 盈利概率
         self.thread_fund_profit = FundProfitProbabilityThread(self._log)
         self.thread_fund_profit.progress_signal.connect(self.update_status_msg)
-        self.thread_fund_profit.result_signal.connect(self.receive_fund_fund_profit)
+        self.thread_fund_profit.result_signal.connect(self.receive_fund_profit)
         self.thread_fund_profit.error_signal.connect(self.handle_error)
 
         # 获取基金数据
-        QTimer.singleShot(1000, self.reload_fund)  # 延迟 n 秒后执行 reload_fund 方法
+        QTimer.singleShot(1000, self.reload_fund)  # 延迟 n 毫秒后执行 reload_fund 方法
 
         self.connect_signal_solt()
 
@@ -120,11 +156,35 @@ class MainWindow(QMainWindow):
         cls.ui.cbT1Premium.setChecked(False)
         cls.set_col_hidden(0, "T-1溢价率")
 
-    def receive_fund_fund_profit(self, data):
-        """获取基金盈利概率列表"""
-        self.statusBar().showMessage(f"成功获取基金盈利概率: {data}")
-        self._log.info(f"成功获取基金盈利概率: {data}")
-        self.statusBar().removeWidget(self.loding_bar)  # 移除进度条
+    def receive_fund_base_info(self, data):
+        """接收子线程数据：基金基本信息"""
+        self.statusBar().showMessage("成功获取基金基本信息")
+        self._log.info(f"成功获取基金基本信息：{data}")
+
+    def receive_buy_sale_detail(self, data):
+        """接收子线程数据：买卖信息"""
+        self.statusBar().showMessage("成功获取买卖信息")
+        self._log.info(f"成功获取买卖信息：{data}")
+
+    def receive_fund_hold_type(self, data):
+        """接收子线程数据：持仓类型信息"""
+        self.statusBar().showMessage("成功获取持仓类型信息")
+        self._log.info(f"成功获取持仓类型信息：{data}")
+
+    def receive_fund_hold_detail(self, data):
+        """接收子线程数据：持仓细节"""
+        self.statusBar().showMessage("成功获取持仓细节")
+        self._log.info(f"成功获取持仓细节：{data}")
+
+    def receive_fund_risk(self, data):
+        """接收子线程数据：风险信息"""
+        self.statusBar().showMessage("成功获取风险信息")
+        self._log.info(f"成功获取风险信息：{data}")
+
+    def receive_fund_profit(self, data):
+        """接收子线程数据：盈利概率"""
+        self.statusBar().showMessage("成功获取盈利概率")
+        self._log.info(f"成功获取盈利概率：{data}")
 
     def handle_error(cls, error_message):
         """处理错误"""
@@ -258,9 +318,28 @@ class MainWindow(QMainWindow):
             row_data = self._fund.iloc[row]
         else:
             return
-        self._log.info(f'选中行: {row}  基金代码：{row_data["基金代码"]}  基金简称：{row_data["基金简称"]}')
 
-        self.thread_fund_profit.set_fund_code(row_data["基金代码"])
+        fund_code = row_data["基金代码"]
+        self._log.info(f'选中行: {row}  基金代码：{fund_code}  基金简称：{row_data["基金简称"]}')
+        self.statusBar().addPermanentWidget(self.loding_bar)
+
+        # 启动子线程获取对应基金的各个信息
+        self.thread_fund_base_info.set_fund_code(fund_code)
+        self.thread_fund_base_info.start()
+
+        self.thread_buy_sale_detail.set_fund_code(fund_code)
+        self.thread_buy_sale_detail.start()
+
+        self.thread_fund_hold_type.set_fund_code(fund_code)
+        self.thread_fund_hold_type.start()
+
+        self.thread_fund_hold_detail.set_fund_code(fund_code)
+        self.thread_fund_hold_detail.start()
+
+        self.thread_fund_risk.set_fund_code(fund_code)
+        self.thread_fund_risk.start()
+
+        self.thread_fund_profit.set_fund_code(fund_code)
         self.thread_fund_profit.start()
 
 
