@@ -36,10 +36,10 @@ class MainWindow(QMainWindow):
         self.statusBar().showMessage("窗体初始化成功")
 
         # 创建子线程
-        self.thread = FundGetterThread()
-        self.thread.progress_signal.connect(self.update_status_msg)  # 连接进度信号到更新状态方法
-        self.thread.result_signal.connect(self.receive_fund_data)  # 连接结果信号到结果处理方法
-        self.thread.error_signal.connect(self.handle_error)  # 连接错误信号到错误处理方法
+        self.thread_all_fund_list = FundGetterThread()
+        self.thread_all_fund_list.progress_signal.connect(self.update_status_msg)  # 连接进度信号到更新状态方法
+        self.thread_all_fund_list.result_signal.connect(self.receive_fund_data)  # 连接结果信号到结果处理方法
+        self.thread_all_fund_list.error_signal.connect(self.handle_error)  # 连接错误信号到错误处理方法
 
         # 获取基金数据
         QTimer.singleShot(1000, self.reload_fund)  # 延迟 n 秒后执行 reload_fund 方法
@@ -70,7 +70,6 @@ class MainWindow(QMainWindow):
         self.ui.btnCleanIncludeWords.clicked.connect(self.ui.leIncludeWords.clear)
         self.ui.btnCleanExcludeWords.clicked.connect(self.ui.leExcludeWords.clear)
 
-
     def update_status_msg(cls, message):
         """更新状态栏状态"""
         cls.statusBar().showMessage(message)
@@ -78,7 +77,8 @@ class MainWindow(QMainWindow):
     def receive_fund_data(cls, data):
         """处理任务结果"""
         cls._fund = data
-        cls.statusBar().showMessage(f'成功获取公募基金数据 共 {cls._fund.shape[0]} 条数据\t获取时间 {QDateTime.currentDateTime().toString("yyyy-MM-dd HH:mm:ss")}')
+        cls.statusBar().showMessage(
+            f'成功获取公募基金数据 共 {cls._fund.shape[0]} 条数据\t获取时间 {QDateTime.currentDateTime().toString("yyyy-MM-dd HH:mm:ss")}')
         cls._log.info(cls._fund)
         cls.tbvModel = DataFrameModel(cls._fund)
         cls.ui.tbvFunds.setModel(cls.tbvModel)  # 创建 DataFrameModel 并绑定到 QTableView
@@ -124,7 +124,7 @@ class MainWindow(QMainWindow):
 
         cls.statusBar().showMessage("开始获取基金数据...")
         cls._log.info("开始获取基金数据")
-        cls.thread.start()  # 启动子线程
+        cls.thread_all_fund_list.start()  # 启动子线程
 
     def set_col_hidden(cls, state, col_name):
         """根据复选框状态确认是否隐藏某些行"""
