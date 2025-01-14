@@ -10,6 +10,7 @@
         "fund_hold_type_thread.py",
         "fund_buy_sale_detail_thread.py",
         "fund_hold_detail_thread.py",
-        "fund_risk_thread.py"
+        "fund_risk_thread.py",
+        "fund_profit_probability_thread.py"
     ]
 }
