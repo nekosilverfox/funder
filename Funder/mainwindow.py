@@ -17,6 +17,7 @@ from ui_form import Ui_MainWindow
 
 from fund_getter_thread import FundGetterThread
 from dataframe_model import DataFrameModel
+from fund_profit_probability_thread import FundProfitProbabilityThread
 
 
 class MainWindow(QMainWindow):
@@ -25,10 +26,14 @@ class MainWindow(QMainWindow):
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.loding_bar = None
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         # self.ui.setTitle("公募基金筛选器")
+
+        # 添加无限循环的进度条到状态栏
+        self.loding_bar = QProgressBar()
+        self.loding_bar.setRange(0, 0)  # 无限循环模式
+        self.loding_bar.setFixedWidth(200)  # 设置进度条宽度
 
         self.tbvModel = None
 
@@ -36,10 +41,16 @@ class MainWindow(QMainWindow):
         self.statusBar().showMessage("窗体初始化成功")
 
         # 创建子线程
+        # 获取所有基金列表
         self.thread_all_fund_list = FundGetterThread()
         self.thread_all_fund_list.progress_signal.connect(self.update_status_msg)  # 连接进度信号到更新状态方法
         self.thread_all_fund_list.result_signal.connect(self.receive_fund_data)  # 连接结果信号到结果处理方法
         self.thread_all_fund_list.error_signal.connect(self.handle_error)  # 连接错误信号到错误处理方法
+
+        self.thread_fund_profit = FundProfitProbabilityThread(self._log)
+        self.thread_fund_profit.progress_signal.connect(self.update_status_msg)
+        self.thread_fund_profit.result_signal.connect(self.receive_fund_fund_profit)
+        self.thread_fund_profit.error_signal.connect(self.handle_error)
 
         # 获取基金数据
         QTimer.singleShot(1000, self.reload_fund)  # 延迟 n 秒后执行 reload_fund 方法
@@ -109,6 +120,12 @@ class MainWindow(QMainWindow):
         cls.ui.cbT1Premium.setChecked(False)
         cls.set_col_hidden(0, "T-1溢价率")
 
+    def receive_fund_fund_profit(self, data):
+        """获取基金盈利概率列表"""
+        self.statusBar().showMessage(f"成功获取基金盈利概率: {data}")
+        self._log.info(f"成功获取基金盈利概率: {data}")
+        self.statusBar().removeWidget(self.loding_bar)  # 移除进度条
+
     def handle_error(cls, error_message):
         """处理错误"""
         cls.statusBar().showMessage(error_message)
@@ -116,12 +133,7 @@ class MainWindow(QMainWindow):
 
     def reload_fund(cls):
         """启动子线程去获取基金数据"""
-        # 添加无限循环的进度条到状态栏
-        cls.loding_bar = QProgressBar()
-        cls.loding_bar.setRange(0, 0)  # 无限循环模式
-        cls.loding_bar.setFixedWidth(200)  # 设置进度条宽度
         cls.statusBar().addPermanentWidget(cls.loding_bar)
-
         cls.statusBar().showMessage("开始获取基金数据...")
         cls._log.info("开始获取基金数据")
         cls.thread_all_fund_list.start()  # 启动子线程
@@ -247,6 +259,9 @@ class MainWindow(QMainWindow):
         else:
             return
         self._log.info(f'选中行: {row}  基金代码：{row_data["基金代码"]}  基金简称：{row_data["基金简称"]}')
+
+        self.thread_fund_profit.set_fund_code(row_data["基金代码"])
+        self.thread_fund_profit.start()
 
 
 if __name__ == "__main__":
