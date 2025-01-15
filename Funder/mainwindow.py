@@ -15,9 +15,10 @@ from PySide6.QtCore import Qt, QTimer, QDateTime
 from PySide6.QtWidgets import QApplication, QMainWindow, QHeaderView, QProgressBar, QWidget
 from ui_form import Ui_MainWindow
 from fund_base_info_widget import FundBaseInfoWidget
+from dataframe_model import DataFrameModel
+from fund_detail_table_model import FundDetailTableModel
 
 from fund_getter_thread import FundGetterThread
-from dataframe_model import DataFrameModel
 from fund_base_info_thread import FundBaseInfoThread
 from fund_buy_sale_detail_thread import FundBuySaleDetailThread
 from fund_hold_type_thread import FundHoldTypeThread
@@ -187,25 +188,50 @@ class MainWindow(QMainWindow):
         self.statusBar().showMessage("成功获取买卖信息")
         self._log.info(f"成功获取买卖信息：{data}")
 
+        if data is None:
+            return
+        tb_model = FundDetailTableModel(data)
+        self.ui.tbvBuySaleRole.setModel(tb_model)
+
     def receive_fund_hold_type(self, data):
         """接收子线程数据：持仓类型信息"""
         self.statusBar().showMessage("成功获取持仓类型信息")
         self._log.info(f"成功获取持仓类型信息：{data}")
+
+        if data is None:
+            return
+        tb_model = FundDetailTableModel(data)
+        self.ui.tbvHoldType.setModel(tb_model)
 
     def receive_fund_hold_detail(self, data):
         """接收子线程数据：持仓细节"""
         self.statusBar().showMessage("成功获取持仓细节")
         self._log.info(f"成功获取持仓细节：{data}")
 
+        if data is None:
+            return
+        tb_model = FundDetailTableModel(data)
+        self.ui.tbvHoldDetail.setModel(tb_model)
+
     def receive_fund_risk(self, data):
         """接收子线程数据：风险信息"""
         self.statusBar().showMessage("成功获取风险信息")
         self._log.info(f"成功获取风险信息：{data}")
 
+        if data is None:
+            return
+        tb_model = FundDetailTableModel(data)
+        self.ui.tbvRisk.setModel(tb_model)
+
     def receive_fund_profit(self, data):
         """接收子线程数据：盈利概率"""
         self.statusBar().showMessage("成功获取盈利概率")
         self._log.info(f"成功获取盈利概率：{data}")
+
+        if data is None:
+            return
+        tb_model = FundDetailTableModel(data)
+        self.ui.tbvProfit.setModel(tb_model)
 
     def handle_error(cls, error_message):
         """处理错误"""

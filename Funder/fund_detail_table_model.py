@@ -6,7 +6,7 @@ from PySide6.QtWidgets import QTableView
 
 
 # 自定义模型，用于将 DataFrame 数据适配到 QTableView
-class FundDetailTableModel:
+class FundDetailTableModel(QAbstractTableModel):
     def __init__(self, data: pd.DataFrame):
         super().__init__()
         self._data = data
