@@ -12,6 +12,7 @@
         "fund_hold_detail_thread.py",
         "fund_risk_thread.py",
         "fund_profit_probability_thread.py",
-        "fund_base_info_widget.py"
+        "fund_base_info_widget.py",
+        "fund_detail_table_model.py"
     ]
 }
