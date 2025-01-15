@@ -12,13 +12,13 @@ import sys
 import pandas as pd
 
 from PySide6.QtCore import Qt, QTimer, QDateTime
-from PySide6.QtWidgets import QApplication, QMainWindow, QHeaderView, QProgressBar
+from PySide6.QtWidgets import QApplication, QMainWindow, QHeaderView, QProgressBar, QWidget
 from ui_form import Ui_MainWindow
+from fund_base_info_widget import FundBaseInfoWidget
 
 from fund_getter_thread import FundGetterThread
 from dataframe_model import DataFrameModel
 from fund_base_info_thread import FundBaseInfoThread
-from fund_profit_probability_thread import FundProfitProbabilityThread
 from fund_buy_sale_detail_thread import FundBuySaleDetailThread
 from fund_hold_type_thread import FundHoldTypeThread
 from fund_hold_detail_thread import FundHoldDetailThread
@@ -156,10 +156,31 @@ class MainWindow(QMainWindow):
         cls.ui.cbT1Premium.setChecked(False)
         cls.set_col_hidden(0, "T-1溢价率")
 
+    def replace_widget_in_layout(self, target_widget, new_widget):
+        layout = self.ui.sawFundInfo.layout()
+        for i in range(layout.count()):
+            if layout.itemAt(i).widget() == target_widget:
+                obj_name = target_widget.objectName()
+
+                layout.removeWidget(target_widget)
+                target_widget.setParent(None)
+                target_widget.deleteLater()
+
+                new_widget.setObjectName(obj_name)
+                layout.insertWidget(i, new_widget)
+                break
+
     def receive_fund_base_info(self, data):
         """接收子线程数据：基金基本信息"""
         self.statusBar().showMessage("成功获取基金基本信息")
         self._log.info(f"成功获取基金基本信息：{data}")
+
+        if data is None:
+            return
+
+        new_widget = FundBaseInfoWidget(data, logger=self._log)
+        self.replace_widget_in_layout(self.ui.wFundBaseInfo, new_widget)
+        self.ui.wFundBaseInfo = new_widget
 
     def receive_buy_sale_detail(self, data):
         """接收子线程数据：买卖信息"""
@@ -348,6 +369,12 @@ if __name__ == "__main__":
     # 设置全局样式表
     app.setStyleSheet("""
         /* 设置整个应用程序的背景为黑色，文字为白色 */
+        QLabel {
+            margin: 0; 
+            padding: 0; 
+            border: 1px solid red;
+        }
+            
         QWidget {
             background-color: #31363E;
             color: #D3DAE7;
@@ -364,7 +391,6 @@ if __name__ == "__main__":
                 color: inherit; /* 选中时字体颜色保持与未选中一致 */
             }
     """)
-
     Logger.get_logger().info("程序初始化...")
 
     widget = MainWindow()

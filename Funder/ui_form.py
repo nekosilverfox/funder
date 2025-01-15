@@ -19,7 +19,7 @@ from PySide6.QtWidgets import (QAbstractItemView, QApplication, QCheckBox, QFram
     QGridLayout, QHBoxLayout, QHeaderView, QLabel,
     QLineEdit, QMainWindow, QMenuBar, QPushButton,
     QScrollArea, QSizePolicy, QStatusBar, QTableView,
-    QTreeWidget, QTreeWidgetItem, QVBoxLayout, QWidget)
+    QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -203,36 +203,89 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_2.addWidget(self.widget_table)
 
-        self.widget_4 = QWidget(self.centralwidget)
-        self.widget_4.setObjectName(u"widget_4")
-        self.widget_4.setMinimumSize(QSize(200, 0))
-        self.widget_4.setMaximumSize(QSize(300, 16777215))
-        self.verticalLayout_2 = QVBoxLayout(self.widget_4)
+        self.mwFundDetail = QWidget(self.centralwidget)
+        self.mwFundDetail.setObjectName(u"mwFundDetail")
+        self.mwFundDetail.setMinimumSize(QSize(250, 0))
+        self.mwFundDetail.setMaximumSize(QSize(350, 16777215))
+        self.verticalLayout_2 = QVBoxLayout(self.mwFundDetail)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.scrollArea = QScrollArea(self.widget_4)
-        self.scrollArea.setObjectName(u"scrollArea")
-        self.scrollArea.setWidgetResizable(True)
-        self.saFundInfo = QWidget()
-        self.saFundInfo.setObjectName(u"saFundInfo")
-        self.saFundInfo.setGeometry(QRect(0, 0, 298, 794))
-        self.verticalLayout_3 = QVBoxLayout(self.saFundInfo)
+        self.saFundDetail = QScrollArea(self.mwFundDetail)
+        self.saFundDetail.setObjectName(u"saFundDetail")
+        self.saFundDetail.setWidgetResizable(True)
+        self.saFundDetail.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignTop)
+        self.sawFundInfo = QWidget()
+        self.sawFundInfo.setObjectName(u"sawFundInfo")
+        self.sawFundInfo.setGeometry(QRect(0, 0, 348, 794))
+        self.verticalLayout_3 = QVBoxLayout(self.sawFundInfo)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
-        self.twFundInfo = QTreeWidget(self.saFundInfo)
-        __qtreewidgetitem = QTreeWidgetItem()
-        __qtreewidgetitem.setText(0, u"1");
-        self.twFundInfo.setHeaderItem(__qtreewidgetitem)
-        self.twFundInfo.setObjectName(u"twFundInfo")
+        self.wFundBaseInfo = QWidget(self.sawFundInfo)
+        self.wFundBaseInfo.setObjectName(u"wFundBaseInfo")
+        self.verticalLayout_4 = QVBoxLayout(self.wFundBaseInfo)
+        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
 
-        self.verticalLayout_3.addWidget(self.twFundInfo)
+        self.verticalLayout_3.addWidget(self.wFundBaseInfo)
 
-        self.scrollArea.setWidget(self.saFundInfo)
+        self.widget_8 = QWidget(self.sawFundInfo)
+        self.widget_8.setObjectName(u"widget_8")
+        self.label_9 = QLabel(self.widget_8)
+        self.label_9.setObjectName(u"label_9")
+        self.label_9.setGeometry(QRect(10, 10, 58, 16))
 
-        self.verticalLayout_2.addWidget(self.scrollArea)
+        self.verticalLayout_3.addWidget(self.widget_8)
+
+        self.widget_4 = QWidget(self.sawFundInfo)
+        self.widget_4.setObjectName(u"widget_4")
+        self.label_7 = QLabel(self.widget_4)
+        self.label_7.setObjectName(u"label_7")
+        self.label_7.setGeometry(QRect(30, 0, 58, 16))
+        self.tableWidget_3 = QTableWidget(self.widget_4)
+        self.tableWidget_3.setObjectName(u"tableWidget_3")
+        self.tableWidget_3.setGeometry(QRect(20, 20, 261, 151))
+
+        self.verticalLayout_3.addWidget(self.widget_4)
+
+        self.widget_3 = QWidget(self.sawFundInfo)
+        self.widget_3.setObjectName(u"widget_3")
+        self.label_8 = QLabel(self.widget_3)
+        self.label_8.setObjectName(u"label_8")
+        self.label_8.setGeometry(QRect(20, 0, 58, 16))
+        self.tableWidget_4 = QTableWidget(self.widget_3)
+        self.tableWidget_4.setObjectName(u"tableWidget_4")
+        self.tableWidget_4.setGeometry(QRect(10, 20, 261, 151))
+
+        self.verticalLayout_3.addWidget(self.widget_3)
+
+        self.widget_5 = QWidget(self.sawFundInfo)
+        self.widget_5.setObjectName(u"widget_5")
+        self.tableWidget_2 = QTableWidget(self.widget_5)
+        self.tableWidget_2.setObjectName(u"tableWidget_2")
+        self.tableWidget_2.setGeometry(QRect(10, 20, 261, 151))
+        self.label_6 = QLabel(self.widget_5)
+        self.label_6.setObjectName(u"label_6")
+        self.label_6.setGeometry(QRect(20, 0, 58, 16))
+
+        self.verticalLayout_3.addWidget(self.widget_5)
+
+        self.widget_6 = QWidget(self.sawFundInfo)
+        self.widget_6.setObjectName(u"widget_6")
+        self.label_5 = QLabel(self.widget_6)
+        self.label_5.setObjectName(u"label_5")
+        self.label_5.setGeometry(QRect(20, 10, 58, 16))
+        self.tableWidget = QTableWidget(self.widget_6)
+        self.tableWidget.setObjectName(u"tableWidget")
+        self.tableWidget.setGeometry(QRect(10, 30, 261, 151))
+
+        self.verticalLayout_3.addWidget(self.widget_6)
+
+        self.saFundDetail.setWidget(self.sawFundInfo)
+
+        self.verticalLayout_2.addWidget(self.saFundDetail)
 
 
-        self.horizontalLayout_2.addWidget(self.widget_4)
+        self.horizontalLayout_2.addWidget(self.mwFundDetail)
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
@@ -271,5 +324,10 @@ class Ui_MainWindow(object):
         self.cb1Month.setText(QCoreApplication.translate("MainWindow", u"\u8fd11\u6708 (%)", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"\u5171 N \u6761\u6570\u636e", None))
         self.cbT1Premium.setText(QCoreApplication.translate("MainWindow", u"T-1\u6ea2\u4ef7\u7387", None))
+        self.label_9.setText(QCoreApplication.translate("MainWindow", u"\u98ce\u9669", None))
+        self.label_7.setText(QCoreApplication.translate("MainWindow", u"\u4e70\u5165/\u5356\u51fa\u89c4\u5219", None))
+        self.label_8.setText(QCoreApplication.translate("MainWindow", u"\u6301\u4ed3\u7c7b\u578b\u5360\u6bd4", None))
+        self.label_6.setText(QCoreApplication.translate("MainWindow", u"\u6301\u4ed3\u80a1\u7968\u5360\u6bd4", None))
+        self.label_5.setText(QCoreApplication.translate("MainWindow", u"\u76c8\u5229\u6982\u7387", None))
     # retranslateUi
 

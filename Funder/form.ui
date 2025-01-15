@@ -277,16 +277,16 @@
      </widget>
     </item>
     <item>
-     <widget class="QWidget" name="widget_4" native="true">
+     <widget class="QWidget" name="mwFundDetail" native="true">
       <property name="minimumSize">
        <size>
-        <width>200</width>
+        <width>250</width>
         <height>0</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>300</width>
+        <width>350</width>
         <height>16777215</height>
        </size>
       </property>
@@ -304,16 +304,19 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QScrollArea" name="scrollArea">
+        <widget class="QScrollArea" name="saFundDetail">
          <property name="widgetResizable">
           <bool>true</bool>
          </property>
-         <widget class="QWidget" name="saFundInfo">
+         <property name="alignment">
+          <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+         </property>
+         <widget class="QWidget" name="sawFundInfo">
           <property name="geometry">
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>298</width>
+            <width>348</width>
             <height>794</height>
            </rect>
           </property>
@@ -331,12 +334,146 @@
             <number>0</number>
            </property>
            <item>
-            <widget class="QTreeWidget" name="twFundInfo">
-             <column>
-              <property name="text">
-               <string notr="true">1</string>
+            <widget class="QWidget" name="wFundBaseInfo" native="true">
+             <layout class="QVBoxLayout" name="verticalLayout_4">
+              <property name="leftMargin">
+               <number>0</number>
               </property>
-             </column>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QWidget" name="widget_8" native="true">
+             <widget class="QLabel" name="label_9">
+              <property name="geometry">
+               <rect>
+                <x>10</x>
+                <y>10</y>
+                <width>58</width>
+                <height>16</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>风险</string>
+              </property>
+             </widget>
+            </widget>
+           </item>
+           <item>
+            <widget class="QWidget" name="widget_4" native="true">
+             <widget class="QLabel" name="label_7">
+              <property name="geometry">
+               <rect>
+                <x>30</x>
+                <y>0</y>
+                <width>58</width>
+                <height>16</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>买入/卖出规则</string>
+              </property>
+             </widget>
+             <widget class="QTableWidget" name="tableWidget_3">
+              <property name="geometry">
+               <rect>
+                <x>20</x>
+                <y>20</y>
+                <width>261</width>
+                <height>151</height>
+               </rect>
+              </property>
+             </widget>
+            </widget>
+           </item>
+           <item>
+            <widget class="QWidget" name="widget_3" native="true">
+             <widget class="QLabel" name="label_8">
+              <property name="geometry">
+               <rect>
+                <x>20</x>
+                <y>0</y>
+                <width>58</width>
+                <height>16</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>持仓类型占比</string>
+              </property>
+             </widget>
+             <widget class="QTableWidget" name="tableWidget_4">
+              <property name="geometry">
+               <rect>
+                <x>10</x>
+                <y>20</y>
+                <width>261</width>
+                <height>151</height>
+               </rect>
+              </property>
+             </widget>
+            </widget>
+           </item>
+           <item>
+            <widget class="QWidget" name="widget_5" native="true">
+             <widget class="QTableWidget" name="tableWidget_2">
+              <property name="geometry">
+               <rect>
+                <x>10</x>
+                <y>20</y>
+                <width>261</width>
+                <height>151</height>
+               </rect>
+              </property>
+             </widget>
+             <widget class="QLabel" name="label_6">
+              <property name="geometry">
+               <rect>
+                <x>20</x>
+                <y>0</y>
+                <width>58</width>
+                <height>16</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>持仓股票占比</string>
+              </property>
+             </widget>
+            </widget>
+           </item>
+           <item>
+            <widget class="QWidget" name="widget_6" native="true">
+             <widget class="QLabel" name="label_5">
+              <property name="geometry">
+               <rect>
+                <x>20</x>
+                <y>10</y>
+                <width>58</width>
+                <height>16</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>盈利概率</string>
+              </property>
+             </widget>
+             <widget class="QTableWidget" name="tableWidget">
+              <property name="geometry">
+               <rect>
+                <x>10</x>
+                <y>30</y>
+                <width>261</width>
+                <height>151</height>
+               </rect>
+              </property>
+             </widget>
             </widget>
            </item>
           </layout>
