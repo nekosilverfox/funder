@@ -12,7 +12,7 @@ import sys
 import pandas as pd
 
 from PySide6.QtCore import Qt, QTimer, QDateTime
-from PySide6.QtWidgets import QApplication, QMainWindow, QHeaderView, QProgressBar, QWidget
+from PySide6.QtWidgets import QApplication, QMainWindow, QHeaderView, QProgressBar, QSizePolicy
 from ui_form import Ui_MainWindow
 from fund_base_info_widget import FundBaseInfoWidget
 from dataframe_model import DataFrameModel
@@ -34,14 +34,66 @@ class MainWindow(QMainWindow):
         super().__init__(parent)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        # self.ui.setTitle("公募基金筛选器")
+        self.setWindowTitle("公募基金筛选器")
 
         # 添加无限循环的进度条到状态栏
         self.loding_bar = QProgressBar()
         self.loding_bar.setRange(0, 0)  # 无限循环模式
         self.loding_bar.setFixedWidth(200)  # 设置进度条宽度
 
+        self.ui.barRisk.setRange(0, 0)
+        self.ui.barBuySaleRole.setRange(0, 0)
+        self.ui.barHoldType.setRange(0, 0)
+        self.ui.barHoldDetail.setRange(0, 0)
+        self.ui.barProfit.setRange(0, 0)
+
         self.tbvModel = None
+
+        # 隐藏行号
+        self.ui.tbvRisk.verticalHeader().hide()
+        self.ui.tbvBuySaleRole.verticalHeader().hide()
+        self.ui.tbvHoldType.verticalHeader().hide()
+        self.ui.tbvHoldDetail.verticalHeader().hide()
+        self.ui.tbvProfit.verticalHeader().hide()
+
+        # 设置列宽和行高拉伸策略
+        self.ui.tbvRisk.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.ui.tbvBuySaleRole.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.ui.tbvHoldType.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.ui.tbvHoldDetail.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.ui.tbvProfit.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+
+        # self.ui.tbvRisk.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        # self.ui.tbvBuySaleRole.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        # self.ui.tbvHoldType.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        # self.ui.tbvHoldDetail.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        # self.ui.tbvProfit.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+
+        # 根据内容调调整行高和列宽
+        # self.ui.tbvRisk.resizeColumnsToContents()
+        # self.ui.tbvBuySaleRole.resizeColumnsToContents()
+        # self.ui.tbvHoldType.resizeColumnsToContents()
+        # self.ui.tbvHoldDetail.resizeColumnsToContents()
+        # self.ui.tbvProfit.resizeColumnsToContents()
+        #
+        # self.ui.tbvRisk.resizeRowsToContents()
+        # self.ui.tbvBuySaleRole.resizeRowsToContents()
+        # self.ui.tbvHoldType.resizeRowsToContents()
+        # self.ui.tbvHoldDetail.resizeRowsToContents()
+        # self.ui.tbvProfit.resizeRowsToContents()
+
+        # 设置 QTableView 的大小策略
+        self.ui.tbvRisk.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        self.ui.tbvBuySaleRole.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        self.ui.tbvHoldType.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        self.ui.tbvHoldDetail.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        self.ui.tbvProfit.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+
+        # self.ui.tbvRisk
+        # self.ui.tbvBuySaleRole
+        # self.ui.tbvHoldType
+        # self.ui.tbvHoldDetail
+        # self.ui.tbvProfit
 
         # 向状态栏添加控件
         self.statusBar().showMessage("窗体初始化成功")
@@ -187,51 +239,61 @@ class MainWindow(QMainWindow):
         """接收子线程数据：买卖信息"""
         self.statusBar().showMessage("成功获取买卖信息")
         self._log.info(f"成功获取买卖信息：{data}")
+        self.ui.barBuySaleRole.hide()
 
         if data is None:
             return
         tb_model = FundDetailTableModel(data)
         self.ui.tbvBuySaleRole.setModel(tb_model)
+        self.adjust_table_height(self.ui.tbvBuySaleRole)
 
     def receive_fund_hold_type(self, data):
         """接收子线程数据：持仓类型信息"""
         self.statusBar().showMessage("成功获取持仓类型信息")
         self._log.info(f"成功获取持仓类型信息：{data}")
+        self.ui.barHoldType.hide()
 
         if data is None:
             return
         tb_model = FundDetailTableModel(data)
         self.ui.tbvHoldType.setModel(tb_model)
+        self.adjust_table_height(self.ui.tbvHoldType)
 
     def receive_fund_hold_detail(self, data):
         """接收子线程数据：持仓细节"""
         self.statusBar().showMessage("成功获取持仓细节")
         self._log.info(f"成功获取持仓细节：{data}")
+        self.ui.barHoldDetail.hide()
 
         if data is None:
             return
         tb_model = FundDetailTableModel(data)
         self.ui.tbvHoldDetail.setModel(tb_model)
+        self.adjust_table_height(self.ui.tbvHoldDetail)
 
     def receive_fund_risk(self, data):
         """接收子线程数据：风险信息"""
         self.statusBar().showMessage("成功获取风险信息")
         self._log.info(f"成功获取风险信息：{data}")
+        self.ui.barRisk.hide()
 
         if data is None:
             return
         tb_model = FundDetailTableModel(data)
         self.ui.tbvRisk.setModel(tb_model)
+        self.adjust_table_height(self.ui.tbvRisk)
 
     def receive_fund_profit(self, data):
         """接收子线程数据：盈利概率"""
         self.statusBar().showMessage("成功获取盈利概率")
         self._log.info(f"成功获取盈利概率：{data}")
+        self.ui.barProfit.hide()
 
         if data is None:
             return
         tb_model = FundDetailTableModel(data)
         self.ui.tbvProfit.setModel(tb_model)
+        self.adjust_table_height(self.ui.tbvProfit)
 
     def handle_error(cls, error_message):
         """处理错误"""
@@ -376,19 +438,32 @@ class MainWindow(QMainWindow):
 
         self.thread_buy_sale_detail.set_fund_code(fund_code)
         self.thread_buy_sale_detail.start()
+        self.ui.barBuySaleRole.show()
 
         self.thread_fund_hold_type.set_fund_code(fund_code)
         self.thread_fund_hold_type.start()
+        self.ui.barHoldType.show()
 
         self.thread_fund_hold_detail.set_fund_code(fund_code)
         self.thread_fund_hold_detail.start()
+        self.ui.barHoldDetail.show()
 
         self.thread_fund_risk.set_fund_code(fund_code)
         self.thread_fund_risk.start()
+        self.ui.barRisk.show()
 
         self.thread_fund_profit.set_fund_code(fund_code)
         self.thread_fund_profit.start()
+        self.ui.barProfit.show()
 
+    def adjust_table_height(self, table_view):
+        """根据列的数量更新指定 QTableView 的大小"""
+        row_count = table_view.model().rowCount()
+        row_height = table_view.rowHeight(0)  # 获取第一行的高度
+        total_height = row_height * row_count  # 总高度 = 行高 * 行数
+
+        # 设置 QTableView 的高度
+        table_view.setFixedHeight(total_height + table_view.horizontalHeader().height())
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
