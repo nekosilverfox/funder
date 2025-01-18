@@ -63,24 +63,12 @@ class MainWindow(QMainWindow):
         self.ui.tbvHoldDetail.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.ui.tbvProfit.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
-        # self.ui.tbvRisk.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        # self.ui.tbvBuySaleRole.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        # self.ui.tbvHoldType.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        # self.ui.tbvHoldDetail.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        # self.ui.tbvProfit.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-
-        # 根据内容调调整行高和列宽
-        # self.ui.tbvRisk.resizeColumnsToContents()
-        # self.ui.tbvBuySaleRole.resizeColumnsToContents()
-        # self.ui.tbvHoldType.resizeColumnsToContents()
-        # self.ui.tbvHoldDetail.resizeColumnsToContents()
-        # self.ui.tbvProfit.resizeColumnsToContents()
-        #
-        # self.ui.tbvRisk.resizeRowsToContents()
-        # self.ui.tbvBuySaleRole.resizeRowsToContents()
-        # self.ui.tbvHoldType.resizeRowsToContents()
-        # self.ui.tbvHoldDetail.resizeRowsToContents()
-        # self.ui.tbvProfit.resizeRowsToContents()
+        # 隐藏拉杆
+        self.ui.tbvRisk.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.ui.tbvBuySaleRole.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.ui.tbvHoldType.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.ui.tbvHoldDetail.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.ui.tbvProfit.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
 
         # 设置 QTableView 的大小策略
         self.ui.tbvRisk.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
@@ -436,22 +424,37 @@ class MainWindow(QMainWindow):
         self.thread_fund_base_info.set_fund_code(fund_code)
         self.thread_fund_base_info.start()
 
+        if self.ui.tbvBuySaleRole.model() is not None:
+            self.ui.tbvBuySaleRole.model().clear()
+            self.adjust_table_height(self.ui.tbvBuySaleRole)
         self.thread_buy_sale_detail.set_fund_code(fund_code)
         self.thread_buy_sale_detail.start()
         self.ui.barBuySaleRole.show()
 
+        if self.ui.tbvHoldType.model() is not None:
+            self.ui.tbvHoldType.model().clear()
+            self.adjust_table_height(self.ui.tbvHoldType)
         self.thread_fund_hold_type.set_fund_code(fund_code)
         self.thread_fund_hold_type.start()
         self.ui.barHoldType.show()
 
+        if self.ui.tbvHoldDetail.model() is not None:
+            self.ui.tbvHoldDetail.model().clear()
+            self.adjust_table_height(self.ui.tbvHoldDetail)
         self.thread_fund_hold_detail.set_fund_code(fund_code)
         self.thread_fund_hold_detail.start()
         self.ui.barHoldDetail.show()
 
+        if self.ui.tbvRisk.model() is not None:
+            self.ui.tbvRisk.model().clear()
+            self.adjust_table_height(self.ui.tbvRisk)
         self.thread_fund_risk.set_fund_code(fund_code)
         self.thread_fund_risk.start()
         self.ui.barRisk.show()
 
+        if self.ui.tbvProfit.model() is not None:
+            self.ui.tbvProfit.model().clear()
+            self.adjust_table_height(self.ui.tbvProfit)
         self.thread_fund_profit.set_fund_code(fund_code)
         self.thread_fund_profit.start()
         self.ui.barProfit.show()
@@ -464,6 +467,7 @@ class MainWindow(QMainWindow):
 
         # 设置 QTableView 的高度
         table_view.setFixedHeight(total_height + table_view.horizontalHeader().height())
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

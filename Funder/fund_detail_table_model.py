@@ -71,6 +71,12 @@ class FundDetailTableModel(QAbstractTableModel):
         self._sort_column = column
         self._sort_order = order
 
+    def clear(self):
+        """清空模型的数据"""
+        self.beginResetModel()  # 通知视图数据即将变化
+        self._data = pd.DataFrame()  # 清空数据
+        self.endResetModel()  # 通知视图数据变化已完成
+
     def headerData(self, section, orientation, role=Qt.DisplayRole):
         # 提供表头数据
         if role == Qt.DisplayRole:

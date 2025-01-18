@@ -36,3 +36,4 @@ class FundProfitProbabilityThread(QThread):
 
         self._fund_code = None
         self.result_signal.emit(data)  # 发送结果到主线程
+
