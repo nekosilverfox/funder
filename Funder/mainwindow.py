@@ -130,7 +130,7 @@ class MainWindow(QMainWindow):
         self.thread_fund_profit.error_signal.connect(self.handle_error)
 
         # 获取基金数据
-        QTimer.singleShot(1000, self.reload_fund)  # 延迟 n 毫秒后执行 reload_fund 方法
+        QTimer.singleShot(500, self.reload_fund)  # 延迟 n 毫秒后执行 reload_fund 方法
 
         self.connect_signal_solt()
 
@@ -158,44 +158,44 @@ class MainWindow(QMainWindow):
         self.ui.btnCleanIncludeWords.clicked.connect(self.ui.leIncludeWords.clear)
         self.ui.btnCleanExcludeWords.clicked.connect(self.ui.leExcludeWords.clear)
 
-    def update_status_msg(cls, message):
+    def update_status_msg(self, message):
         """更新状态栏状态"""
-        cls.statusBar().showMessage(message)
+        self.statusBar().showMessage(message)
 
-    def receive_fund_data(cls, data):
+    def receive_fund_data(self, data):
         """处理任务结果"""
-        cls._fund = data
-        cls.statusBar().showMessage(
-            f'成功获取公募基金数据 共 {cls._fund.shape[0]} 条数据\t获取时间 {QDateTime.currentDateTime().toString("yyyy-MM-dd HH:mm:ss")}')
-        cls._log.info(cls._fund)
-        cls.tbvModel = DataFrameModel(cls._fund)
-        cls.ui.tbvFunds.setModel(cls.tbvModel)  # 创建 DataFrameModel 并绑定到 QTableView
-        cls.ui.tbvFunds.selectionModel().selectionChanged.connect(cls.tbvFundsSelectChanged)  # 连接选中行信号
+        self._fund = data
+        self.statusBar().showMessage(
+            f'成功获取公募基金数据 共 {self._fund.shape[0]} 条数据\t获取时间 {QDateTime.currentDateTime().toString("yyyy-MM-dd HH:mm:ss")}')
+        self._log.info(self._fund)
+        self.tbvModel = DataFrameModel(self._fund)
+        self.ui.tbvFunds.setModel(self.tbvModel)  # 创建 DataFrameModel 并绑定到 QTableView
+        self.ui.tbvFunds.selectionModel().selectionChanged.connect(self.tbvFundsSelectChanged)  # 连接选中行信号
 
-        cls.set_tb_header_style()  # 设置表样式
-        cls.statusBar().removeWidget(cls.loding_bar)  # 移除进度条
+        self.set_tb_header_style()  # 设置表样式
+        self.statusBar().removeWidget(self.loding_bar)  # 移除进度条
 
         # 连接复选框对应表列的信号和槽
-        cls.ui.cb1Week.setChecked(True)
-        cls.ui.cb1Month.setChecked(True)
-        cls.ui.cb3Month.setChecked(True)
-        cls.ui.cb6Month.setChecked(True)
-        cls.ui.cb1Year.setChecked(True)
-        cls.ui.cb2Year.setChecked(False)
-        cls.set_col_hidden(0, "近2年")
-        cls.ui.cb3Year.setChecked(False)
-        cls.set_col_hidden(0, "近3年")
-        cls.ui.cbThisYear.setChecked(True)
-        cls.ui.cbFromSetup.setChecked(True)
-        cls.ui.cbFundType.setChecked(True)
-        cls.ui.cbCanBuy.setChecked(True)
-        cls.ui.cbCanSale.setChecked(False)
-        cls.set_col_hidden(0, "赎回状态")
-        cls.ui.cbNextOpenDay.setChecked(False)
-        cls.set_col_hidden(0, "下一开放日")
-        cls.ui.cbDayQuota.setChecked(True)
-        cls.ui.cbT1Premium.setChecked(False)
-        cls.set_col_hidden(0, "T-1溢价率")
+        self.ui.cb1Week.setChecked(True)
+        self.ui.cb1Month.setChecked(True)
+        self.ui.cb3Month.setChecked(True)
+        self.ui.cb6Month.setChecked(True)
+        self.ui.cb1Year.setChecked(True)
+        self.ui.cb2Year.setChecked(False)
+        self.set_col_hidden(0, "近2年")
+        self.ui.cb3Year.setChecked(False)
+        self.set_col_hidden(0, "近3年")
+        self.ui.cbThisYear.setChecked(True)
+        self.ui.cbFromSetup.setChecked(True)
+        self.ui.cbFundType.setChecked(True)
+        self.ui.cbCanBuy.setChecked(True)
+        self.ui.cbCanSale.setChecked(False)
+        self.set_col_hidden(0, "赎回状态")
+        self.ui.cbNextOpenDay.setChecked(False)
+        self.set_col_hidden(0, "下一开放日")
+        self.ui.cbDayQuota.setChecked(True)
+        self.ui.cbT1Premium.setChecked(False)
+        self.set_col_hidden(0, "T-1溢价率")
 
     def replace_widget_in_layout(self, target_widget, new_widget):
         layout = self.ui.sawFundInfo.layout()
@@ -283,97 +283,97 @@ class MainWindow(QMainWindow):
         self.ui.tbvProfit.setModel(tb_model)
         self.adjust_table_height(self.ui.tbvProfit)
 
-    def handle_error(cls, error_message):
+    def handle_error(self, error_message):
         """处理错误"""
-        cls.statusBar().showMessage(error_message)
-        cls.statusBar().removeWidget(cls.loding_bar)  # 移除进度条
+        self.statusBar().showMessage(error_message)
+        self.statusBar().removeWidget(self.loding_bar)  # 移除进度条
 
-    def reload_fund(cls):
+    def reload_fund(self):
         """启动子线程去获取基金数据"""
-        cls.statusBar().addPermanentWidget(cls.loding_bar)
-        cls.statusBar().showMessage("开始获取基金数据...")
-        cls._log.info("开始获取基金数据")
-        cls.thread_all_fund_list.start()  # 启动子线程
+        self.statusBar().addPermanentWidget(self.loding_bar)
+        self.statusBar().showMessage("开始获取基金数据...")
+        self._log.info("开始获取基金数据")
+        self.thread_all_fund_list.start()  # 启动子线程
 
-    def set_col_hidden(cls, state, col_name):
+    def set_col_hidden(self, state, col_name):
         """根据复选框状态确认是否隐藏某些行"""
-        col_index = cls._fund.columns.get_loc(col_name)
-        # cls._log.info(f"ComboBox {col_name} 状态变为 {Qt.CheckState.Checked} 受影响表列下标 {col_index}")
+        col_index = self._fund.columns.get_loc(col_name)
+        # self._log.info(f"ComboBox {col_name} 状态变为 {Qt.CheckState.Checked} 受影响表列下标 {col_index}")
         if state == 2:
-            cls._log.info(f"ComboBox {col_name} 状态变为 Checked 受影响表列下标 {col_index}")
-            cls.ui.tbvFunds.setColumnHidden(col_index, False)
+            self._log.info(f"ComboBox {col_name} 状态变为 Checked 受影响表列下标 {col_index}")
+            self.ui.tbvFunds.setColumnHidden(col_index, False)
         elif state == 0:
-            cls._log.info(f"ComboBox {col_name} 状态变为 UnChecked 受影响表列下标 {col_index}")
-            cls.ui.tbvFunds.setColumnHidden(col_index, True)
+            self._log.info(f"ComboBox {col_name} 状态变为 UnChecked 受影响表列下标 {col_index}")
+            self.ui.tbvFunds.setColumnHidden(col_index, True)
 
-    def set_tb_header_style(cls):
+    def set_tb_header_style(self):
         """设置表头样式，必须在数据添加之后调用，否则会因为越界导致崩溃"""
-        cls._log.info("设置表样式")
-        # cls.ui.tbvFunds.verticalHeader().setVisible(False)  # 取消显示水平表头
-        # cls.ui.tbvFunds.verticalHeader().setDefaultSectionSize(30)  # 设置固定行高为 35 像素
+        self._log.info("设置表样式")
+        # self.ui.tbvFunds.verticalHeader().setVisible(False)  # 取消显示水平表头
+        # self.ui.tbvFunds.verticalHeader().setDefaultSectionSize(30)  # 设置固定行高为 35 像素
 
-        cls.ui.tbvFunds.setSortingEnabled(True)  # 启用排序功能
-        tb_header = cls.ui.tbvFunds.horizontalHeader()
+        self.ui.tbvFunds.setSortingEnabled(True)  # 启用排序功能
+        tb_header = self.ui.tbvFunds.horizontalHeader()
         tb_header.setSectionResizeMode(QHeaderView.Stretch)  # 自动拉伸
 
         tb_header.setSectionResizeMode(0, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(0, 65)  # 固定宽度
+        self.ui.tbvFunds.setColumnWidth(0, 65)  # 固定宽度
 
         tb_header.setSectionResizeMode(2, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(2, 110)  # 基金类型
+        self.ui.tbvFunds.setColumnWidth(2, 110)  # 基金类型
 
         tb_header.setSectionResizeMode(3, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(3, 65)  # 固定宽度
+        self.ui.tbvFunds.setColumnWidth(3, 65)  # 固定宽度
 
         tb_header.setSectionResizeMode(4, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(4, 60)  # 日增长率
+        self.ui.tbvFunds.setColumnWidth(4, 60)  # 日增长率
 
         tb_header.setSectionResizeMode(5, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(5, 60)  # 近1周
+        self.ui.tbvFunds.setColumnWidth(5, 60)  # 近1周
 
         tb_header.setSectionResizeMode(6, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(6, 60)  # 近1月
+        self.ui.tbvFunds.setColumnWidth(6, 60)  # 近1月
 
         tb_header.setSectionResizeMode(7, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(7, 60)  # 近3月
+        self.ui.tbvFunds.setColumnWidth(7, 60)  # 近3月
 
         tb_header.setSectionResizeMode(8, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(8, 60)  # 近6月
+        self.ui.tbvFunds.setColumnWidth(8, 60)  # 近6月
 
         tb_header.setSectionResizeMode(9, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(9, 65)  # 近1年
+        self.ui.tbvFunds.setColumnWidth(9, 65)  # 近1年
 
         tb_header.setSectionResizeMode(10, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(10, 65)  # 近2年
+        self.ui.tbvFunds.setColumnWidth(10, 65)  # 近2年
 
         tb_header.setSectionResizeMode(11, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(11, 65)  # 近3年
+        self.ui.tbvFunds.setColumnWidth(11, 65)  # 近3年
 
         tb_header.setSectionResizeMode(12, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(12, 60)  # 今年来
+        self.ui.tbvFunds.setColumnWidth(12, 60)  # 今年来
 
         tb_header.setSectionResizeMode(13, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(13, 65)  # 成立来
+        self.ui.tbvFunds.setColumnWidth(13, 65)  # 成立来
 
         tb_header.setSectionResizeMode(14, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(14, 70)  # 申购状态
+        self.ui.tbvFunds.setColumnWidth(14, 70)  # 申购状态
 
         tb_header.setSectionResizeMode(15, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(15, 70)  # 赎回状态
+        self.ui.tbvFunds.setColumnWidth(15, 70)  # 赎回状态
 
         tb_header.setSectionResizeMode(16, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(16, 85)  # 下一开放日
+        self.ui.tbvFunds.setColumnWidth(16, 85)  # 下一开放日
 
         tb_header.setSectionResizeMode(17, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(17, 110)  # 固定宽度
+        self.ui.tbvFunds.setColumnWidth(17, 110)  # 固定宽度
 
         tb_header.setSectionResizeMode(18, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(18, 50)  # 固定宽度
+        self.ui.tbvFunds.setColumnWidth(18, 50)  # 固定宽度
 
         tb_header.setSectionResizeMode(19, QHeaderView.Fixed)
-        cls.ui.tbvFunds.setColumnWidth(19, 55)  # 固定宽度
+        self.ui.tbvFunds.setColumnWidth(19, 55)  # 固定宽度
 
-        cls._log.info("设置表样式完成")
+        self._log.info("设置表样式完成")
 
     def filter_by_fund_name(self):
         """根据正向和反向词过滤基金名称"""

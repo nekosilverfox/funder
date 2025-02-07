@@ -44,6 +44,12 @@ class FundDetailTableModel(QAbstractTableModel):
                   or self._data.columns[col] == "仓位占比"
                   or self._data.columns[col] == "占净值比例"):
                 return f"{value}%"  # 添加百分号
+
+            elif (self._data.columns[col] == "费用") and value <= 50.0:
+                return f"{value}%"  # 添加百分号
+            elif (self._data.columns[col] == "费用") and value > 50.0:
+                return f"{value}元"  # 添加百分号
+
             return str(value)  # 返回正常数据
 
         # Qt.ForegroundRole 的优先级高于样式表
