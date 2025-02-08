@@ -22,6 +22,9 @@ class DataFrameModel(QAbstractTableModel):
         # 返回列数
         return len(self._data.columns)
 
+    def getCurrentData(self):  # 新增方法
+        return self._data
+
     def data(self, index, role=Qt.DisplayRole):
         """返回单元格的数据和样式"""
         if not index.isValid():

@@ -404,17 +404,15 @@ class MainWindow(QMainWindow):
         """处理选择变化事件，获取选中行的数据或行索引"""
         # 获取当前选中的行索引（QModelIndex 对象列表）
         indexes = self.ui.tbvFunds.selectionModel().selectedRows()
+        if not indexes:
+            return
 
         # 由于选择模式为单选，列表中最多只有一个元素
-        row_data = None
-        if indexes:
-            index = indexes[0]  # 获取第一个选中的行 PySide6.QtCore.QModelIndex
-            row = index.row()  # 获取行号（0-based index）
-
-            # 获取整行数据
-            row_data = self._fund.iloc[row]
-        else:
-            return
+        model = self.ui.tbvFunds.model()  # 获取模型对象
+        current_data = model.getCurrentData()  # 获取当前显示的数据
+        index = indexes[0]  # 获取第一个选中的行 PySide6.QtCore.QModelIndex
+        row = index.row()  # 获取行号（0-based index）
+        row_data = current_data.iloc[row]  # 获取整行数据
 
         fund_code = row_data["基金代码"]
         self._log.info(f'选中行: {row}  基金代码：{fund_code}  基金简称：{row_data["基金简称"]}')
