@@ -79,4 +79,3 @@ class FundGetterThread(QThread):
             error_message = f"获取公募基金数据时发生错误: {str(e)}"
             self.progress_signal.emit(error_message)
             self.error_signal.emit(error_message)  # 发送错误信号
-

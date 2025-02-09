@@ -26,6 +26,7 @@ from fund_hold_detail_thread import FundHoldDetailThread
 from fund_profit_probability_thread import FundProfitProbabilityThread
 from fund_risk_thread import FundRiskThread
 
+
 class MainWindow(QMainWindow):
     _fund = None
     _log = Logger.get_logger()
@@ -247,14 +248,15 @@ class MainWindow(QMainWindow):
         self.ui.tbvHoldType.setModel(tb_model)
         self.adjust_table_height(self.ui.tbvHoldType)
 
-    def receive_fund_hold_detail(self, data):
+    def receive_fund_hold_detail(self, last_report, data):
         """接收子线程数据：持仓细节"""
         self.statusBar().showMessage("成功获取持仓细节")
         self._log.info(f"成功获取持仓细节：{data}")
         self.ui.barHoldDetail.hide()
 
-        if data is None:
+        if (data is None) or (last_report is None):
             return
+        self.ui.lbReportTime.setText(f'({last_report})')
         tb_model = FundDetailTableModel(data)
         self.ui.tbvHoldDetail.setModel(tb_model)
         self.adjust_table_height(self.ui.tbvHoldDetail)
@@ -437,6 +439,7 @@ class MainWindow(QMainWindow):
         self.ui.barHoldType.show()
 
         if self.ui.tbvHoldDetail.model() is not None:
+            self.ui.lbReportTime.clear()
             self.ui.tbvHoldDetail.model().clear()
             self.adjust_table_height(self.ui.tbvHoldDetail)
         self.thread_fund_hold_detail.set_fund_code(fund_code)

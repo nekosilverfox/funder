@@ -676,6 +676,19 @@
                   </widget>
                  </item>
                  <item>
+                  <widget class="QLabel" name="lbReportTime">
+                   <property name="font">
+                    <font>
+                     <pointsize>13</pointsize>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
                   <spacer name="horizontalSpacer_5">
                    <property name="orientation">
                     <enum>Qt::Orientation::Horizontal</enum>

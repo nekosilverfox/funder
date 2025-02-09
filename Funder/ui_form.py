@@ -383,6 +383,12 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_7.addWidget(self.label_13)
 
+        self.lbReportTime = QLabel(self.widget_12)
+        self.lbReportTime.setObjectName(u"lbReportTime")
+        self.lbReportTime.setFont(font4)
+
+        self.horizontalLayout_7.addWidget(self.lbReportTime)
+
         self.horizontalSpacer_5 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_7.addItem(self.horizontalSpacer_5)
@@ -495,6 +501,7 @@ class Ui_MainWindow(object):
         self.label_10.setText(QCoreApplication.translate("MainWindow", u"\u4e70\u5165/\u5356\u51fa\u89c4\u5219", None))
         self.label_11.setText(QCoreApplication.translate("MainWindow", u"\u6301\u4ed3\u7c7b\u578b\u5360\u6bd4", None))
         self.label_13.setText(QCoreApplication.translate("MainWindow", u"\u6301\u4ed3\u80a1\u7968\u5360\u6bd4", None))
+        self.lbReportTime.setText("")
         self.label_12.setText(QCoreApplication.translate("MainWindow", u"\u76c8\u5229\u6982\u7387", None))
     # retranslateUi
 

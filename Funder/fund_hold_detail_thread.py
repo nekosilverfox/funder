@@ -5,7 +5,7 @@ import pandas as pd
 
 class FundHoldDetailThread(QThread):
     progress_signal = Signal(str)  # 用于传递进度日志
-    result_signal = Signal(pd.DataFrame)  # 用于传递任务完成后的结果
+    result_signal = Signal(str, pd.DataFrame)  # 用于传递任务完成后的结果
     error_signal = Signal(str)  # 用于传递错误信息
 
     def __init__(self, logger=None):
@@ -32,6 +32,7 @@ class FundHoldDetailThread(QThread):
             self.progress_signal.emit(error_message)
             self.error_signal.emit(error_message)  # 发送错误信号
 
+        last_report = None
         if not is_succ:
             try:
                 is_succ = True
@@ -50,6 +51,6 @@ class FundHoldDetailThread(QThread):
                 self.progress_signal.emit(error_message)
                 self.error_signal.emit(error_message)  # 发送错误信号
 
-        self.progress_signal.emit(f"获取基金 {self._fund_code} 仓位占比完成")
+        self.progress_signal.emit(f"获取基金 {self._fund_code}： {last_report} 仓位占比完成")
         self._fund_code = None
-        self.result_signal.emit(data)  # 发送结果到主线程
+        self.result_signal.emit(last_report, data)  # 发送结果到主线程
