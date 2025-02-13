@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 14.0.1, 2025-02-07T14:13:17. -->
+<!-- Written by QtCreator 14.0.1, 2025-02-11T00:46:14. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -141,6 +141,8 @@
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
       <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Python.PysideBuildStep</value>
+      <value type="QString" key="Python.PySideProjectTool">/Users/fox/Library/Python/3.9/bin/pyside6-project</value>
+      <value type="QString" key="Python.PySideUic">/Users/fox/Library/Python/3.9/bin/pyside6-uic</value>
      </valuemap>
      <value type="qlonglong" key="ProjectExplorer.BuildStepList.StepsCount">1</value>
      <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">构建</value>
