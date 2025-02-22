@@ -153,6 +153,7 @@ class MainWindow(QMainWindow):
         self.ui.cbDayQuota.stateChanged.connect(lambda state: self.set_col_hidden(state, "日累计限定金额"))
         self.ui.cbT1Premium.stateChanged.connect(lambda state: self.set_col_hidden(state, "T-1溢价率"))
 
+        self.ui.leFundCode.textChanged.connect(self.filter_by_fund_code)
         self.ui.leIncludeWords.textChanged.connect(self.filter_by_fund_name)
         self.ui.leExcludeWords.textChanged.connect(self.filter_by_fund_name)
 
@@ -377,6 +378,16 @@ class MainWindow(QMainWindow):
 
         self._log.info("设置表样式完成")
 
+    def filter_by_fund_code(self):
+        """通过基金代码进行筛选"""
+        code = self.ui.leFundCode.text()
+        self._log.info(f'通过基金代码进行筛选：{code}')
+
+        mask = pd.Series([True] * len(self._fund))
+        mask &= self._fund["基金代码"].str.contains(code, regex=True, na=False)
+        filter_fund = self._fund[mask]
+        self.tbvModel.resetDataFrame(pd.DataFrame(filter_fund))
+
     def filter_by_fund_name(self):
         """根据正向和反向词过滤基金名称"""
         include_input = self.ui.leIncludeWords.text().strip()
@@ -475,11 +486,13 @@ if __name__ == "__main__":
     # 设置全局样式表
     app.setStyleSheet("""
         /* 设置整个应用程序的背景为黑色，文字为白色 */
+        /*
         QLabel {
-            margin: 0; 
-            padding: 0; 
+            margin: 0;
+            padding: 0;
             border: 1px solid red;
         }
+        */
             
         QWidget {
             background-color: #31363E;

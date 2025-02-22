@@ -43,16 +43,21 @@ class Ui_MainWindow(object):
         self.horizontalLayout = QHBoxLayout(self.widget)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        self.leIncludeWords_2 = QLineEdit(self.widget)
-        self.leIncludeWords_2.setObjectName(u"leIncludeWords_2")
+        self.label_5 = QLabel(self.widget)
+        self.label_5.setObjectName(u"label_5")
+
+        self.horizontalLayout.addWidget(self.label_5)
+
+        self.leFundCode = QLineEdit(self.widget)
+        self.leFundCode.setObjectName(u"leFundCode")
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.leIncludeWords_2.sizePolicy().hasHeightForWidth())
-        self.leIncludeWords_2.setSizePolicy(sizePolicy)
-        self.leIncludeWords_2.setMaximumSize(QSize(100, 16777215))
+        sizePolicy.setHeightForWidth(self.leFundCode.sizePolicy().hasHeightForWidth())
+        self.leFundCode.setSizePolicy(sizePolicy)
+        self.leFundCode.setMaximumSize(QSize(100, 16777215))
 
-        self.horizontalLayout.addWidget(self.leIncludeWords_2)
+        self.horizontalLayout.addWidget(self.leFundCode)
 
         self.horizontalSpacer_7 = QSpacerItem(40, 20, QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Minimum)
 
@@ -63,6 +68,7 @@ class Ui_MainWindow(object):
         font1 = QFont()
         font1.setPointSize(12)
         font1.setBold(True)
+        font1.setItalic(True)
         self.label_3.setFont(font1)
 
         self.horizontalLayout.addWidget(self.label_3)
@@ -476,6 +482,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
+        self.label_5.setText(QCoreApplication.translate("MainWindow", u"\u57fa\u91d1\u4ee3\u7801", None))
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"\u6839\u636e\u57fa\u91d1\u540d\u79f0\u8fdb\u884c\u7b5b\u9009\uff08\u7b5b\u9009\u8bcd\u4f7f\u7528\u7a7a\u683c\u8fdb\u884c\u5206\u9694\uff09", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"\u6b63\u5411\u7b5b\u9009\u8bcd", None))
         self.btnCleanIncludeWords.setText(QCoreApplication.translate("MainWindow", u"\u6e05\u7a7a", None))
