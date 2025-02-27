@@ -199,6 +199,10 @@ class MainWindow(QMainWindow):
         self.ui.cbT1Premium.setChecked(False)
         self.set_col_hidden(0, "T-1溢价率")
 
+        # TODO 增加自动选中第一行
+        self.ui.tbvFunds.selectRow(0)
+
+
     def replace_widget_in_layout(self, target_widget, new_widget):
         layout = self.ui.sawFundInfo.layout()
         for i in range(layout.count()):

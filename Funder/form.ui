@@ -111,7 +111,14 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="leIncludeWords"/>
+           <widget class="QLineEdit" name="leIncludeWords">
+            <property name="font">
+             <font>
+              <family>.AppleSystemUIFont</family>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QPushButton" name="btnCleanIncludeWords">

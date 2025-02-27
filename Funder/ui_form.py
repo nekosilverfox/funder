@@ -80,6 +80,10 @@ class Ui_MainWindow(object):
 
         self.leIncludeWords = QLineEdit(self.widget)
         self.leIncludeWords.setObjectName(u"leIncludeWords")
+        font2 = QFont()
+        font2.setFamilies([u".AppleSystemUIFont"])
+        font2.setPointSize(12)
+        self.leIncludeWords.setFont(font2)
 
         self.horizontalLayout.addWidget(self.leIncludeWords)
 
@@ -132,12 +136,12 @@ class Ui_MainWindow(object):
 
         self.label_4 = QLabel(self.widget_2)
         self.label_4.setObjectName(u"label_4")
-        font2 = QFont()
-        font2.setPointSize(12)
-        font2.setBold(True)
-        font2.setItalic(True)
-        font2.setUnderline(False)
-        self.label_4.setFont(font2)
+        font3 = QFont()
+        font3.setPointSize(12)
+        font3.setBold(True)
+        font3.setItalic(True)
+        font3.setUnderline(False)
+        self.label_4.setFont(font3)
 
         self.gridLayout.addWidget(self.label_4, 3, 9, 1, 1)
 
@@ -211,10 +215,10 @@ class Ui_MainWindow(object):
 
         self.tbvFunds = QTableView(self.widget_table)
         self.tbvFunds.setObjectName(u"tbvFunds")
-        font3 = QFont()
-        font3.setPointSize(12)
-        font3.setUnderline(False)
-        self.tbvFunds.setFont(font3)
+        font4 = QFont()
+        font4.setPointSize(12)
+        font4.setUnderline(False)
+        self.tbvFunds.setFont(font4)
         self.tbvFunds.setStyleSheet(u"")
         self.tbvFunds.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
         self.tbvFunds.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
@@ -262,10 +266,10 @@ class Ui_MainWindow(object):
         self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
         self.label_9 = QLabel(self.widget_7)
         self.label_9.setObjectName(u"label_9")
-        font4 = QFont()
-        font4.setPointSize(13)
-        font4.setBold(True)
-        self.label_9.setFont(font4)
+        font5 = QFont()
+        font5.setPointSize(13)
+        font5.setBold(True)
+        self.label_9.setFont(font5)
 
         self.horizontalLayout_3.addWidget(self.label_9)
 
@@ -305,7 +309,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
         self.label_10 = QLabel(self.widget_9)
         self.label_10.setObjectName(u"label_10")
-        self.label_10.setFont(font4)
+        self.label_10.setFont(font5)
 
         self.horizontalLayout_4.addWidget(self.label_10)
 
@@ -345,7 +349,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_5.setContentsMargins(0, 0, 0, 0)
         self.label_11 = QLabel(self.widget_10)
         self.label_11.setObjectName(u"label_11")
-        self.label_11.setFont(font4)
+        self.label_11.setFont(font5)
 
         self.horizontalLayout_5.addWidget(self.label_11)
 
@@ -385,13 +389,13 @@ class Ui_MainWindow(object):
         self.horizontalLayout_7.setContentsMargins(0, 0, 0, 0)
         self.label_13 = QLabel(self.widget_12)
         self.label_13.setObjectName(u"label_13")
-        self.label_13.setFont(font4)
+        self.label_13.setFont(font5)
 
         self.horizontalLayout_7.addWidget(self.label_13)
 
         self.lbReportTime = QLabel(self.widget_12)
         self.lbReportTime.setObjectName(u"lbReportTime")
-        self.lbReportTime.setFont(font4)
+        self.lbReportTime.setFont(font5)
 
         self.horizontalLayout_7.addWidget(self.lbReportTime)
 
@@ -431,7 +435,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_6.setContentsMargins(0, 0, 0, 0)
         self.label_12 = QLabel(self.widget_11)
         self.label_12.setObjectName(u"label_12")
-        self.label_12.setFont(font4)
+        self.label_12.setFont(font5)
 
         self.horizontalLayout_6.addWidget(self.label_12)
 
